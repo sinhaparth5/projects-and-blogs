@@ -315,8 +315,8 @@
   border-radius: 0.5rem;
 }
 
-/* Byline under the post h1 — authored in MDX as <p className="byline">. */
-.prose :global(.byline) {
+/* Byline under the post h1. */
+.byline {
   font-family: var(--font-blog-heading), sans-serif;
   font-size: 0.875rem;
   color: #6b7280;

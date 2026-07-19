@@ -1,7 +1,10 @@
 .git
+.env*
 .next
 out
 node_modules
+coverage
+editor-design
 npm-debug.log*
 pnpm-debug.log*
 README.md

@@ -1,11 +1,11 @@
 import styles from "./blog.module.css";
-import type { BlogListData } from "./types";
+import type { BlogSiteData } from "./types";
 
 export default function Masthead({
   data,
   isHome = false,
 }: {
-  data: BlogListData;
+  data: BlogSiteData;
   /** true on the blog list page — renders the title as the page h1 */
   isHome?: boolean;
 }) {

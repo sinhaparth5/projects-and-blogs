@@ -4,7 +4,7 @@ import nextra from "nextra";
 const withNextra = nextra({});
 
 const nextConfig: NextConfig = {
-  output: "export",
+  output: "standalone",
   reactCompiler: true,
   trailingSlash: true,
   images: {

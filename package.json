@@ -6,10 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "db:seed": "prisma db seed",
     "lint": "biome check",
     "format": "biome format --write"
   },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "dependencies": {
+    "@prisma/client": "^6.19.3",
     "next": "16.2.10",
     "nextra": "^4.6.1",
     "nextra-theme-blog": "^4.6.1",
@@ -22,6 +27,8 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "1.0.0",
+    "prisma": "^6.19.3",
+    "tsx": "^4.23.1",
     "typescript": "^5"
   }
 }

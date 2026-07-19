@@ -1,6 +1,10 @@
+import { Blog } from "@prisma/client";
 import type { Metadata } from "next";
 import BlogList from "@/components/blog/BlogList";
-import { parthBlogs } from "@/components/blog/data/parth";
+import { blogSites } from "@/components/blog/data/site";
+import { getPublishedArticles } from "@/lib/articles/queries";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Blogs - Parth Sinha",
@@ -8,6 +12,21 @@ export const metadata: Metadata = {
     "Blog posts by Parth Sinha on full-stack engineering, web performance, and tooling.",
 };
 
-export default function ParthBlogsPage() {
-  return <BlogList data={parthBlogs} />;
+export default async function ParthBlogsPage() {
+  const articles = await getPublishedArticles(Blog.pb);
+
+  return (
+    <BlogList
+      data={{
+        ...blogSites.pb,
+        posts: articles.map((article) => ({
+          title: article.title,
+          date: article.publishedAt?.toISOString() ?? "",
+          summary: article.summary,
+          tags: article.tags,
+          href: `/pb/blogs/${article.slug}/`,
+        })),
+      }}
+    />
+  );
 }

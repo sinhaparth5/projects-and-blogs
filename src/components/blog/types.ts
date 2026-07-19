@@ -8,7 +8,7 @@ export interface BlogPost {
   href: string;
 }
 
-export interface BlogListData {
+export interface BlogSiteData {
   /** Page heading, e.g. "Parth's Blog" */
   title: string;
   author: string;
@@ -17,5 +17,8 @@ export interface BlogListData {
   /** Link to the blog list (the "Blog" nav item) */
   blogHref: string;
   description: string;
+}
+
+export interface BlogListData extends BlogSiteData {
   posts: BlogPost[];
 }
