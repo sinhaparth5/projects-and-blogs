@@ -112,7 +112,32 @@
 
 .content :global(.tiptap ul),
 .content :global(.tiptap ol) {
+  margin-block: 0.75rem;
   padding-left: 1.5rem;
+}
+
+.content :global(.tiptap ul) {
+  list-style-type: disc;
+}
+
+.content :global(.tiptap ol) {
+  list-style-type: decimal;
+}
+
+.content :global(.tiptap ul ul) {
+  list-style-type: circle;
+}
+
+.content :global(.tiptap ul ul ul) {
+  list-style-type: square;
+}
+
+.content :global(.tiptap li + li) {
+  margin-top: 0.25rem;
+}
+
+.content :global(.tiptap li::marker) {
+  color: #52525b;
 }
 
 .content :global(.tiptap blockquote) {
