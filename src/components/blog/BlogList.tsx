@@ -18,7 +18,7 @@ export default function BlogList({ data }: { data: BlogListData }) {
       className={`${styles.container} ${blogFontVariables}`}
       tabIndex={-1}
     >
-      <div className={styles.content}>
+      <div className={`${styles.content} ${styles.blogListContent}`}>
         <Masthead data={data} isHome />
 
         <p className={styles.description}>{description}</p>

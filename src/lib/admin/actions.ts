@@ -15,6 +15,10 @@ function publicPath(blog: ArticleInput["blog"], slug?: string) {
   return slug ? `/${blog}/blogs/${slug}/` : `/${blog}/blogs/`;
 }
 
+function resumePath(blog: ArticleInput["blog"]) {
+  return blog === "pb" ? "/parth/" : "/shine/";
+}
+
 function refreshArticlePaths(
   blog: ArticleInput["blog"],
   slug: string,
@@ -23,6 +27,7 @@ function refreshArticlePaths(
   revalidatePath("/admin/");
   revalidatePath(publicPath(blog));
   revalidatePath(publicPath(blog, slug));
+  revalidatePath(resumePath(blog));
 
   if (previousSlug && previousSlug !== slug) {
     revalidatePath(publicPath(blog, previousSlug));

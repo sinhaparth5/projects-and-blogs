@@ -4,6 +4,8 @@ import { shine } from "@/components/resume/data/shine";
 import Resume from "@/components/resume/Resume";
 import { getPublishedArticles } from "@/lib/articles/queries";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Shine - Creative Developer",
   description:

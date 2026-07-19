@@ -5,6 +5,8 @@ import Resume from "@/components/resume/Resume";
 import { getPublishedArticles } from "@/lib/articles/queries";
 import { absoluteUrl } from "@/lib/seo";
 
+export const dynamic = "force-dynamic";
+
 const title = "Parth Sinha - Full Stack Engineer";
 const description =
   "Detail-oriented Full Stack Engineer dedicated to building high-quality products. Specializing in modern web technologies and scalable solutions.";
