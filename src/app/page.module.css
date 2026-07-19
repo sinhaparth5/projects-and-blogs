@@ -9,7 +9,7 @@
   min-height: 100dvh;
   color: var(--ink);
   background: var(--cream);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-display), Georgia, "Times New Roman", serif;
 }
 
 .page :where(a) {
@@ -34,6 +34,7 @@
   display: inline-flex;
   align-items: center;
   font-size: 1.65rem;
+  font-weight: 500;
   letter-spacing: -0.06em;
   text-decoration: none;
 }
@@ -49,7 +50,7 @@
   display: inline-flex;
   align-items: center;
   padding-inline: 0.4rem;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
   font-size: 0.75rem;
   letter-spacing: 0.1em;
   text-decoration: none;
@@ -70,15 +71,17 @@
 
 .hero {
   position: relative;
-  min-height: clamp(49rem, 92vw, 71rem);
+  min-height: clamp(42rem, 78vw, 62rem);
   width: min(100%, 90rem);
   margin-inline: auto;
   isolation: isolate;
 }
 
 .heroGlow,
+.heroGlowAlt,
 .storyGlow,
-.collectionGlow {
+.collectionGlow,
+.ctaGlow {
   position: absolute;
   z-index: -1;
   width: clamp(15rem, 28vw, 25rem);
@@ -95,18 +98,91 @@
   right: 10%;
 }
 
+.heroGlowAlt {
+  top: -6%;
+  left: -8%;
+}
+
+.heroPill {
+  position: absolute;
+  top: 26%;
+  right: -7rem;
+  z-index: 1;
+  width: 14.5rem;
+  height: 2.8rem;
+  border: 1px solid var(--peach);
+  border-radius: 999px;
+  will-change: transform;
+}
+
+.heroPill svg {
+  position: absolute;
+  bottom: -1.6rem;
+  left: 0.2rem;
+  width: 1.8rem;
+  fill: var(--blush);
+}
+
+.ribbon {
+  position: relative;
+  z-index: 6;
+  overflow: hidden;
+  margin-block: clamp(1.5rem, 3vw, 2.5rem);
+  border-block: 1px solid rgba(36, 32, 30, 0.12);
+  background: #fff;
+  transform: rotate(-2deg) scale(1.03);
+}
+
+.ribbonTrack {
+  display: flex;
+  width: max-content;
+  animation: ribbonScroll 32s linear infinite;
+}
+
+.ribbonTrack span {
+  padding-block: 0.85rem;
+  white-space: nowrap;
+  color: var(--ink);
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.ribbonReverse .ribbonTrack {
+  animation-direction: reverse;
+}
+
+.ribbonReverse {
+  transform: rotate(2deg) scale(1.03);
+}
+
+@keyframes ribbonScroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 .heroImageWrap {
   position: absolute;
-  top: clamp(13rem, 23vw, 19rem);
+  top: clamp(17rem, 26vw, 25rem);
   left: 50%;
   z-index: 2;
-  width: clamp(19rem, 42vw, 38rem);
+  width: clamp(20rem, 62vw, 56rem);
   transform: translateX(-50%);
   will-change: transform;
 }
 
 .heroImage {
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 16 / 9;
+}
+
+.artwork.heroImage {
+  background: transparent;
+}
+
+.artwork.heroImage img {
+  object-fit: contain;
 }
 
 .imageSpace {
@@ -132,7 +208,17 @@
       rgba(36, 32, 30, 0.28) 50%,
       transparent 50.2%
     ), rgba(255, 204, 192, 0.32);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+}
+
+.artwork {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 204, 192, 0.32);
+}
+
+.artwork img {
+  object-fit: cover;
 }
 
 .imageSpace span,
@@ -143,7 +229,7 @@
 }
 
 .imageSpace strong {
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-display), Georgia, "Times New Roman", serif;
   font-size: 1.15rem;
   font-weight: 400;
 }
@@ -162,7 +248,7 @@
 .heroCopy > p,
 .storyCopy > p,
 .collectionCopy > p {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.16em;
@@ -171,7 +257,7 @@
 
 .hero h1 {
   margin-top: 1rem;
-  color: #fff;
+  color: #3f3f3f;
   font-size: clamp(3.5rem, 9vw, 8.5rem);
   font-weight: 300;
   line-height: 0.82;
@@ -186,9 +272,13 @@
   text-transform: lowercase;
 }
 
+.hero h1 em {
+  color: var(--coral);
+}
+
 .heroCta {
   position: absolute;
-  bottom: 15%;
+  bottom: 2.5rem;
   left: max(1rem, calc(50% - 34rem));
   z-index: 5;
   min-height: 3rem;
@@ -197,6 +287,7 @@
   gap: 0.75rem;
   border-bottom: 1px solid currentColor;
   font-size: clamp(1.25rem, 2.5vw, 2rem);
+  font-weight: 500;
   text-decoration: none;
 }
 
@@ -213,7 +304,7 @@
 .heroNote {
   position: absolute;
   right: max(1rem, calc(50% - 37rem));
-  bottom: 8%;
+  bottom: 2.5rem;
   max-width: 18rem;
   font-size: 1rem;
   line-height: 1.5;
@@ -233,7 +324,7 @@
 
 .story {
   position: relative;
-  min-height: clamp(70rem, 130vw, 108rem);
+  min-height: clamp(64rem, 120vw, 86rem);
   width: min(100%, 90rem);
   margin-inline: auto;
   isolation: isolate;
@@ -263,7 +354,7 @@
   width: min(42vw, 34rem);
 }
 
-.storyMainImage .imageSpace {
+.storyMainImage :is(.imageSpace, .artwork) {
   aspect-ratio: 4 / 5;
 }
 
@@ -275,7 +366,7 @@
   box-shadow: 0 1.5rem 3rem rgba(91, 48, 35, 0.18);
 }
 
-.storyInsetImage .imageSpace {
+.storyInsetImage :is(.imageSpace, .artwork) {
   aspect-ratio: 3 / 4;
   background-color: #f1b5a5;
 }
@@ -302,7 +393,7 @@
   display: block;
   max-width: 34rem;
   margin-bottom: 2rem;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
   font-size: clamp(1rem, 1.5vw, 1.15rem);
   line-height: 1.7;
 }
@@ -321,11 +412,45 @@
   margin-top: 0.5rem;
 }
 
+.storyIndex {
+  margin-top: 3rem;
+  display: grid;
+  gap: 0;
+  max-width: 30rem;
+  list-style: none;
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  font-size: 0.95rem;
+}
+
+.storyIndex li {
+  display: flex;
+  align-items: baseline;
+  gap: 1.1rem;
+  border-top: 1px solid rgba(36, 32, 30, 0.25);
+  padding-block: 0.9rem;
+}
+
+.storyIndex li:last-child {
+  border-bottom: 1px solid rgba(36, 32, 30, 0.25);
+}
+
+.storyIndex li span {
+  color: var(--coral);
+  font-family: var(--font-display), Georgia, "Times New Roman", serif;
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
 .collection {
   position: relative;
-  min-height: clamp(72rem, 112vw, 96rem);
   width: min(100% - 2rem, 76rem);
   margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 35rem) minmax(0, 1fr);
+  column-gap: clamp(2rem, 5vw, 4rem);
+  row-gap: clamp(2rem, 4vw, 3rem);
+  align-items: start;
+  padding-block: clamp(2rem, 4vw, 4rem);
   isolation: isolate;
 }
 
@@ -335,14 +460,13 @@
 }
 
 .collectionFeature {
-  position: absolute;
-  top: 7%;
-  left: 0;
-  width: min(43vw, 35rem);
+  position: relative;
+  grid-row: 1 / span 2;
+  width: 100%;
   will-change: transform;
 }
 
-.collectionFeature .imageSpace {
+.collectionFeature :is(.imageSpace, .artwork) {
   aspect-ratio: 2 / 3;
 }
 
@@ -361,10 +485,8 @@
 }
 
 .collectionCopy {
-  position: absolute;
-  top: 8%;
-  right: 0;
-  width: min(47%, 32rem);
+  grid-column: 2;
+  max-width: 34rem;
 }
 
 .collectionCopy h2 {
@@ -376,11 +498,28 @@
   letter-spacing: -0.055em;
 }
 
+.collectionArrow {
+  margin-top: 0.5rem;
+  display: inline-flex;
+  width: 3.25rem;
+  height: 3.25rem;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--coral);
+  border-radius: 50%;
+  color: var(--coral);
+  transition:
+    background-color 180ms ease-out,
+    color 180ms ease-out;
+}
+
+.collectionArrow:hover {
+  background-color: var(--coral);
+  color: #fff;
+}
+
 .cards {
-  position: absolute;
-  top: 37%;
-  right: 0;
-  width: min(58%, 44rem);
+  grid-column: 2;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: clamp(0.75rem, 2vw, 1.5rem);
@@ -391,7 +530,7 @@
   text-decoration: none;
 }
 
-.cards .imageSpace {
+.cards :is(.imageSpace, .artwork) {
   aspect-ratio: 2 / 3;
   min-height: 0;
   transition: background-color 220ms ease-out;
@@ -401,10 +540,18 @@
   background-color: rgba(255, 167, 147, 0.68);
 }
 
+.cards a .artwork img {
+  transition: transform 220ms ease-out;
+}
+
+.cards a:hover .artwork img {
+  transform: scale(1.04);
+}
+
 .cards a > span {
   display: block;
   margin-top: 0.9rem;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
   font-size: 0.65rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -414,7 +561,78 @@
   display: block;
   margin-top: 0.25rem;
   font-size: clamp(1.05rem, 1.5vw, 1.35rem);
-  font-weight: 400;
+  font-weight: 500;
+}
+
+.ctaBand {
+  position: relative;
+  width: min(100% - 2rem, 76rem);
+  margin-inline: auto;
+  padding-block: clamp(4rem, 9vw, 8rem);
+  text-align: center;
+  isolation: isolate;
+}
+
+.ctaGlow {
+  top: 8%;
+  right: 4%;
+}
+
+.ctaSpark {
+  position: absolute;
+  top: 16%;
+  left: 8%;
+  width: clamp(2rem, 4vw, 3rem);
+  fill: var(--peach);
+}
+
+.ctaBand > p {
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.ctaBand h2 {
+  margin-top: 1.25rem;
+  font-size: clamp(2.75rem, 6.5vw, 6rem);
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  text-wrap: balance;
+}
+
+.ctaBand h2 em {
+  color: var(--coral);
+  font-weight: 300;
+}
+
+.ctaLinks {
+  margin-top: 2.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+}
+
+.ctaLink {
+  min-height: 3rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-bottom: 1px solid currentColor;
+  font-size: clamp(1.15rem, 2vw, 1.6rem);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.ctaLink svg {
+  transition: transform 180ms ease-out;
+}
+
+.ctaLink:hover svg {
+  transform: translateX(0.25rem);
 }
 
 .footer {
@@ -426,14 +644,14 @@
   gap: 2rem;
   margin-inline: auto;
   border-top: 1px solid rgba(36, 32, 30, 0.75);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
   font-size: 0.8rem;
 }
 
 .footer strong {
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-display), Georgia, "Times New Roman", serif;
   font-size: 1.25rem;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .footerLink {
@@ -455,12 +673,12 @@
   }
 
   .hero {
-    min-height: 48rem;
+    min-height: 36rem;
   }
 
   .heroImageWrap {
-    top: 11.5rem;
-    width: min(82vw, 23rem);
+    top: 16rem;
+    width: 92vw;
   }
 
   .heroCopy {
@@ -476,12 +694,13 @@
     left: 1rem;
   }
 
-  .heroNote {
+  .heroNote,
+  .heroPill {
     display: none;
   }
 
   .story {
-    min-height: 75rem;
+    min-height: 90rem;
   }
 
   .storyMainImage {
@@ -508,24 +727,21 @@
   }
 
   .collection {
-    min-height: 109rem;
+    grid-template-columns: 1fr;
   }
 
   .collectionFeature {
-    top: 2rem;
+    grid-row: auto;
     width: min(78vw, 28rem);
   }
 
   .collectionCopy {
-    top: 47rem;
-    left: 0;
-    width: 100%;
+    grid-column: 1;
+    max-width: none;
   }
 
   .cards {
-    top: 61rem;
-    left: 0;
-    width: 100%;
+    grid-column: 1;
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
@@ -561,17 +777,20 @@
   .cards .imageSpace small {
     display: block;
   }
-
-  .collection {
-    min-height: 165rem;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .siteHeader nav a,
   .heroCta svg,
   .storyLink svg,
-  .cards .imageSpace {
+  .cards .imageSpace,
+  .cards a .artwork img,
+  .collectionArrow,
+  .ctaLink svg {
     transition-duration: 0.01ms;
+  }
+
+  .ribbonTrack {
+    animation: none;
   }
 }

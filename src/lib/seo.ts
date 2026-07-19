@@ -4,9 +4,9 @@ export const siteUrl = new URL(
     "https://parthsinha.com",
 );
 
-export const siteName = "Parth Sinha — Projects & Blogs";
+export const siteName = "Parth & Shine — Projects & Blogs";
 export const siteDescription =
-  "Engineering projects, technical writing, and design notes by Parth Sinha and Shine.";
+  "Engineering projects and technical writing by Parth Sinha (GPU architecture and systems) and Shine (AI, machine learning, and quantitative research).";
 
 export function absoluteUrl(path: string) {
   return new URL(path, siteUrl).toString();
