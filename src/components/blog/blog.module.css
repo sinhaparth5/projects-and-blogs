@@ -224,6 +224,10 @@
   align-self: stretch;
 }
 
+.mobileContents {
+  display: none;
+}
+
 .contentsRail {
   position: sticky;
   top: clamp(1rem, 4vh, 2rem);
@@ -876,23 +880,72 @@
     gap: 1.5rem;
   }
 
-  .contentsRail,
   .notesRail,
   .prose {
     width: 100%;
   }
 
-  .contentsRail .stickyRail {
+  .contentsRail {
+    display: none;
+  }
+
+  .mobileContents {
+    display: block;
+    width: 100%;
     border: 1px solid #e2e8f0;
     border-radius: 0.625rem;
-    padding: 0.75rem;
     background: #f8fafc;
   }
 
-  .contentsRail {
-    position: static;
-    max-height: none;
-    overflow: visible;
+  .mobileContents summary {
+    position: relative;
+    min-height: 2.75rem;
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 2.75rem 0.75rem 0.875rem;
+    color: #111827;
+    font-family: var(--font-blog-heading), sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .mobileContents summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .mobileContents summary::after {
+    position: absolute;
+    right: 1rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-right: 2px solid #475569;
+    border-bottom: 2px solid #475569;
+    content: "";
+    transform: translateY(-0.125rem) rotate(45deg);
+    transition: transform 150ms ease-out;
+  }
+
+  .mobileContents[open] summary::after {
+    transform: translateY(0.125rem) rotate(225deg);
+  }
+
+  .mobileContents summary:focus-visible {
+    outline: 2px solid #111827;
+    outline-offset: 2px;
+  }
+
+  .mobileContents nav,
+  .mobileContents > .railEmpty {
+    padding: 0 0.75rem 0.75rem;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  .mobileContents .contentsList {
+    margin-top: 0.75rem;
   }
 
   .relatedArticles > div {

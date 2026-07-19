@@ -115,6 +115,35 @@ export default function ArticleWorkspace({
 
   return (
     <div ref={workspace} className={styles.articleWorkspace}>
+      <details className={styles.mobileContents}>
+        <summary>On this page</summary>
+        {headings.length > 0 ? (
+          <nav aria-label="On this page">
+            <ol className={styles.contentsList}>
+              {headings.map((heading) => (
+                <li key={heading.id} data-level={heading.level}>
+                  <a
+                    href={`#${heading.id}`}
+                    aria-current={
+                      activeHeading === heading.id ? "location" : undefined
+                    }
+                    onClick={(event) =>
+                      event.currentTarget
+                        .closest("details")
+                        ?.removeAttribute("open")
+                    }
+                  >
+                    {heading.text}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        ) : (
+          <p className={styles.railEmpty}>Headings will appear here.</p>
+        )}
+      </details>
+
       <aside className={styles.contentsRail} aria-label="On this page">
         <div className={styles.stickyRail}>
           <p className={styles.railTitle}>On this page</p>
