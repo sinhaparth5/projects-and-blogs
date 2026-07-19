@@ -1,0 +1,37 @@
+import styles from "./docs.module.css"
+
+export const metadata = {
+  title: "Documentation",
+  description: "Documentation powered by Nextra and MDX.",
+}
+
+# Documentation
+
+This page is written in **MDX** and rendered with Nextra's blog components.
+
+<aside className={styles.callout}>
+  <p className={styles.calloutTitle}>Locally scoped styles</p>
+  <p className={styles.calloutText}>
+    These class names come from a CSS Module and cannot collide with styles on
+    other routes.
+  </p>
+</aside>
+
+## Adding content
+
+Create a `page.mdx` file inside a route directory under `src/app`. For example,
+`src/app/guides/getting-started/page.mdx` becomes `/guides/getting-started/`.
+
+Import a colocated module when a page needs custom styles:
+
+```mdx
+import styles from './page.module.css'
+
+<aside className={styles.callout}>Scoped content</aside>
+```
+
+```tsx
+export function Callout({ children }: { children: React.ReactNode }) {
+  return <aside>{children}</aside>
+}
+```

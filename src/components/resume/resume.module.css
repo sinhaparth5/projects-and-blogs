@@ -1,0 +1,635 @@
+.container {
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  position: relative;
+  margin: 0 auto;
+  scroll-margin-top: 3rem;
+  overflow: auto;
+  padding: 1rem;
+  min-height: 100dvh;
+  font-family: var(--font-mono);
+  line-height: 1.6;
+  color: black;
+  background-color: #ffffff;
+}
+
+/* Neutralize global article styles (Nextra blog theme) that center and pad
+   every <article>, which staggers the CV cards. */
+.container :where(article) {
+  margin-inline: 0;
+  padding: 0;
+}
+
+/* :where() keeps this at class-level specificity so later rules like
+   .workPosition can override with the mono stack, mirroring the original
+   theme's plain h1-h4 element selector. */
+.container :where(h1, h2, h3, h4) {
+  font-family: var(--font-inter), sans-serif;
+  font-weight: 600;
+}
+
+.content {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 42rem;
+  background-color: white;
+}
+
+.content > * + * {
+  margin-top: 2rem;
+}
+
+.headerSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.profileInfo {
+  flex: 1;
+}
+
+.profileInfo h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.description {
+  font-size: 0.875rem;
+  color: black;
+  margin-bottom: 0.25rem;
+  text-wrap: pretty;
+}
+
+.location {
+  font-size: 0.75rem;
+  color: black;
+}
+
+.location a {
+  text-decoration: none;
+  color: #000;
+}
+
+.location a:hover {
+  text-decoration: underline;
+}
+
+.profileLocation {
+  display: flex;
+  align-items: center;
+}
+
+.contactLinks {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.contactLink {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  text-decoration: none;
+  color: black;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s;
+}
+
+.contactLink img {
+  width: 20px;
+  height: 20px;
+  /* Tailwind preflight's img { max-width: 100% } would shrink the icon to the
+     16px content box; the theme renders these at a full 20px. */
+  max-width: none;
+  flex-shrink: 0;
+}
+
+.contactLink:hover {
+  background-color: #f3f4f6;
+}
+
+.contactLink:focus-visible {
+  outline: 2px solid #111827;
+  outline-offset: 2px;
+}
+
+.profileImage {
+  flex-shrink: 0;
+}
+
+.profileImage img {
+  width: 120px;
+  height: 120px;
+  border-radius: 0.5rem;
+  object-fit: cover;
+}
+
+.avatarFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 120px;
+  border-radius: 0.5rem;
+  background-color: #f1f5f9;
+  color: #475569;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.aboutInfo {
+  display: flex;
+  flex-direction: column;
+  color: #000;
+}
+
+.aboutInfo h2 {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+}
+
+.aboutDescription {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  text-wrap: pretty;
+}
+
+.workExperience {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.workExperience h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.workList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.workItem {
+  border-radius: 0.5rem;
+  background-color: white;
+  padding: 0.25rem 0;
+}
+
+.workContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.workHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.workTitleSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 1rem;
+}
+
+.workCompany {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  column-gap: 1rem;
+  font-size: 1rem;
+  line-height: 1rem;
+  font-weight: 600;
+}
+
+.workCompany a {
+  text-decoration: none;
+  color: black;
+}
+
+.workCompany a:hover {
+  text-decoration: underline;
+}
+
+.workTags {
+  list-style: none;
+  padding: 0;
+  display: inline-flex;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+  margin: 0 -0.5rem;
+}
+
+.workTagsDesktop {
+  display: none;
+}
+
+.workTagsMobile .workTags {
+  margin-top: 0.5rem;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 0.375rem;
+  border: 1px solid transparent;
+  padding: 0.125rem 0.5rem;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  transition: color 0.2s;
+  white-space: nowrap;
+  background-color: #f1f5f9;
+  color: #475569;
+  vertical-align: middle;
+  font-size: 0.75rem;
+}
+
+.workPeriod {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.25rem;
+  font-family: var(--font-inter), sans-serif;
+}
+
+.workPosition {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 14px;
+}
+
+.workDescription {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: #6b7280;
+  line-height: 1rem;
+}
+
+.workSummary {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.8);
+  text-wrap: pretty;
+}
+
+.workDetails {
+  list-style-type: disc;
+  list-style-position: inside;
+  margin-top: 0.5rem;
+}
+
+.workDetails li {
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.8);
+  text-wrap: pretty;
+}
+
+.skillsSection {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.skillsSection h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.skillsList {
+  display: flex;
+  list-style: none;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  padding: 0;
+}
+
+.skillTag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 0.375rem;
+  border: 1px solid transparent;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  transition: background-color 0.2s;
+  white-space: nowrap;
+  background-color: #111827cc;
+  color: white;
+}
+
+.skillTag:hover {
+  background-color: rgba(59, 130, 246, 0.6);
+}
+
+.projectsSection {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  gap: 0.75rem;
+  scroll-margin-bottom: 4rem;
+}
+
+.projectsSection h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.projectsGrid {
+  margin: 0 -0.75rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+.projectCard {
+  height: 100%;
+}
+
+.projectContent {
+  border-radius: 0.5rem;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0.75rem;
+}
+
+.projectHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.projectTitleSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.projectTitle {
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  font-size: 1rem;
+}
+
+.projectTitle a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  text-decoration: none;
+  color: black;
+}
+
+.projectTitle a:hover {
+  text-decoration: underline;
+}
+
+.projectTitle a:focus-visible {
+  outline: 2px solid #111827;
+  outline-offset: 2px;
+  border-radius: 0.125rem;
+}
+
+.activeIndicator {
+  width: 0.25rem;
+  height: 0.25rem;
+  border-radius: 50%;
+  background-color: #10b981;
+}
+
+.projectUrl {
+  display: none;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-decoration: underline;
+}
+
+.projectDescription {
+  color: black;
+  text-wrap: pretty;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.projectFooter {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: auto;
+  display: flex;
+}
+
+.projectTags {
+  margin-top: 0.5rem;
+  display: flex;
+  list-style: none;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  padding: 0;
+}
+
+.projectTag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 0.375rem;
+  border: 1px solid transparent;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  transition: color 0.2s;
+  white-space: nowrap;
+  background-color: #f1f5f9;
+  color: #475569;
+  padding: 0.25rem 0.25rem;
+  font-size: 0.625rem;
+}
+
+.educationSection {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.educationSection h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.educationList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.educationItem {
+  border-radius: 0.5rem;
+  background-color: white;
+}
+
+.educationContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.educationHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 1rem;
+}
+
+.educationInstitution {
+  font-weight: 600;
+  line-height: 1;
+  font-size: 1rem;
+}
+
+.educationPeriod {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-variant-numeric: tabular-nums;
+}
+
+.educationDegree {
+  text-wrap: pretty;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  color: rgba(0, 0, 0, 0.8);
+  line-height: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .workTagsDesktop {
+    display: inline-flex;
+  }
+
+  .workTagsMobile {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 4rem;
+  }
+
+  .projectsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .projectsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contactLink,
+  .tag,
+  .skillTag,
+  .projectTag {
+    transition: none;
+  }
+}
+
+@media print {
+  .container {
+    padding: 2.75rem;
+  }
+
+  .content > * + * {
+    margin-top: 1rem;
+  }
+
+  .workExperience {
+    gap: 0.25rem;
+  }
+
+  .workList {
+    gap: 0;
+  }
+
+  .workItem {
+    padding: 0;
+  }
+
+  .workCompany {
+    font-size: 0.875rem;
+  }
+
+  .workPosition {
+    font-size: 0.75rem;
+  }
+
+  .workSummary {
+    margin-top: 0.25rem;
+    font-size: 0.625rem;
+  }
+
+  .tag {
+    padding: 0.125rem 0.25rem;
+    font-size: 8px;
+    line-height: 1.25;
+  }
+
+  .skillsSection {
+    gap: 0.25rem;
+  }
+
+  .skillTag {
+    font-size: 0.625rem;
+  }
+
+  .projectsSection {
+    gap: 0.25rem;
+    padding-top: 3rem;
+  }
+
+  .projectsGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  .projectUrl {
+    display: block;
+  }
+
+  .projectDescription {
+    font-size: 0.625rem;
+  }
+
+  .projectTag {
+    padding: 0.125rem 0.25rem;
+    font-size: 8px;
+    line-height: 1.25;
+  }
+
+  .educationDegree {
+    font-size: 0.75rem;
+  }
+}
