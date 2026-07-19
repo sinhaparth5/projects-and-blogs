@@ -662,6 +662,120 @@
   line-height: 1.5;
 }
 
+.hiddenFileInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.seoImageDropzone {
+  min-height: 10rem;
+  display: grid;
+  width: 100%;
+  place-items: center;
+  align-content: center;
+  gap: 0.5rem;
+  border: 1px dashed #a1a1aa;
+  border-radius: 0.625rem;
+  padding: 1.5rem;
+  color: var(--admin-ink);
+  background: #fafafa;
+  cursor: pointer;
+  transition-property: border-color, background-color;
+  transition-duration: 150ms;
+}
+
+.seoImageDropzone:hover {
+  border-color: var(--admin-ink);
+  background: #f4f4f5;
+}
+
+.seoImageDropzone span {
+  color: var(--admin-muted);
+  font-size: 0.75rem;
+}
+
+.seoImageDropzone:focus-visible,
+.removeImageButton:focus-visible {
+  outline: 3px solid var(--admin-ink);
+  outline-offset: 2px;
+}
+
+.seoImageDropzone:disabled,
+.removeImageButton:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+
+.seoImagePreview {
+  display: grid;
+  grid-template-columns: minmax(12rem, 20rem) minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid var(--admin-border);
+  border-radius: 0.625rem;
+  padding: 0.75rem;
+  background: #fafafa;
+}
+
+.seoImagePreview img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1200 / 630;
+  border-radius: 0.375rem;
+  object-fit: cover;
+}
+
+.seoImagePreview p {
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.seoImagePreview span {
+  display: block;
+  overflow: hidden;
+  margin-top: 0.25rem;
+  color: var(--admin-muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.6875rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.seoImageActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.removeImageButton {
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 0;
+  border-radius: 0.375rem;
+  padding: 0.625rem 0.875rem;
+  color: #991b1b;
+  background: #fef2f2;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media (max-width: 620px) {
+  .seoImagePreview {
+    grid-template-columns: 1fr;
+  }
+}
+
 .fieldError,
 .formError {
   color: #991b1b;

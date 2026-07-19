@@ -8,6 +8,7 @@ function validForm() {
   form.set("title", "A useful article");
   form.set("slug", "a-useful-article");
   form.set("summary", "A short summary.");
+  form.set("seoImageUrl", "https://media.example.com/article.webp");
   form.set("tags", "Next.js, Security, Next.js");
   form.set(
     "bodyHtml",
@@ -24,6 +25,10 @@ test("parses, normalizes, and sanitizes valid article input", () => {
   if (result.success) {
     assert.deepEqual(result.data.tags, ["Next.js", "Security"]);
     assert.equal(result.data.intent, "publish");
+    assert.equal(
+      result.data.seoImageUrl,
+      "https://media.example.com/article.webp",
+    );
     assert.equal(result.data.bodyHtml, "<p>Safe body</p>");
   }
 });
@@ -34,6 +39,7 @@ test("returns field errors for invalid article input", () => {
   form.set("title", "");
   form.set("slug", "Bad Slug");
   form.set("summary", "");
+  form.set("seoImageUrl", "javascript:alert(1)");
   form.set("bodyHtml", "<script>alert(1)</script>");
 
   const result = parseArticleInput(form);
@@ -43,6 +49,7 @@ test("returns field errors for invalid article input", () => {
     assert.deepEqual(Object.keys(result.state.fieldErrors ?? {}).sort(), [
       "blog",
       "bodyHtml",
+      "seoImageUrl",
       "slug",
       "summary",
       "title",

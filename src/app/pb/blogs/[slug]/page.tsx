@@ -15,6 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!article) return { title: "Post not found", robots: { index: false } };
   const path = articlePath("pb", article.slug);
+  const seoImage = article.seoImageUrl || absoluteUrl(`${path}opengraph-image`);
   return {
     title: article.title,
     description: article.summary,
@@ -32,12 +33,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       modifiedTime: article.updatedAt.toISOString(),
       authors: [absoluteUrl("/parth/")],
       tags: article.tags,
+      images: [{ url: seoImage, width: 1200, height: 630, alt: article.title }],
     },
     twitter: {
       card: "summary_large_image",
       creator: "@sinhaparth555",
       title: article.title,
       description: article.summary,
+      images: [seoImage],
     },
   };
 }

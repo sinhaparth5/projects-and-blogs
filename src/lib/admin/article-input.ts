@@ -10,6 +10,7 @@ export interface ArticleInput {
   title: string;
   slug: string;
   summary: string;
+  seoImageUrl: string;
   tags: string[];
   bodyHtml: string;
   intent: ArticleIntent;
@@ -18,7 +19,16 @@ export interface ArticleInput {
 export interface ArticleActionState {
   error: string | null;
   fieldErrors?: Partial<
-    Record<"blog" | "title" | "slug" | "summary" | "tags" | "bodyHtml", string>
+    Record<
+      | "blog"
+      | "title"
+      | "slug"
+      | "summary"
+      | "seoImageUrl"
+      | "tags"
+      | "bodyHtml",
+      string
+    >
   >;
 }
 
@@ -37,6 +47,7 @@ export function parseArticleInput(
   const title = text(formData, "title");
   const slug = text(formData, "slug");
   const summary = text(formData, "summary");
+  const seoImageUrl = text(formData, "seoImageUrl");
   const tagValue = text(formData, "tags");
   const rawBodyHtml = text(formData, "bodyHtml");
   const intentValue = text(formData, "intent");
@@ -54,6 +65,19 @@ export function parseArticleInput(
   }
   if (!summary || summary.length > 500) {
     fieldErrors.summary = "Enter a summary of no more than 500 characters.";
+  }
+  if (seoImageUrl) {
+    try {
+      const url = new URL(seoImageUrl);
+      if (
+        (url.protocol !== "https:" && url.protocol !== "http:") ||
+        seoImageUrl.length > 2_048
+      ) {
+        throw new Error("Unsupported SEO image URL");
+      }
+    } catch {
+      fieldErrors.seoImageUrl = "Upload an image with a valid public URL.";
+    }
   }
 
   const tags = [
@@ -101,6 +125,7 @@ export function parseArticleInput(
       title,
       slug,
       summary,
+      seoImageUrl,
       tags,
       bodyHtml,
       intent,

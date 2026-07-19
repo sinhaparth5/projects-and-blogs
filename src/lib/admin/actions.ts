@@ -74,6 +74,7 @@ export async function saveArticle(
     title: input.title,
     slug: input.slug,
     summary: input.summary,
+    seoImageUrl: input.seoImageUrl || null,
     tags: input.tags,
     bodyHtml: input.bodyHtml,
     authorId: author.id,

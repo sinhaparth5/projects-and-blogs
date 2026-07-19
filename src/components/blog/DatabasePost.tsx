@@ -59,6 +59,7 @@ export async function DatabasePost({
     .filter(Boolean).length;
   const readingMinutes = Math.max(1, Math.ceil(wordCount / 220));
   const path = articlePath(blog, slug);
+  const seoImage = article.seoImageUrl || absoluteUrl(`${path}opengraph-image`);
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -69,7 +70,7 @@ export async function DatabasePost({
         description: article.summary,
         datePublished: article.publishedAt?.toISOString(),
         dateModified: article.updatedAt.toISOString(),
-        image: absoluteUrl(`${path}opengraph-image`),
+        image: seoImage,
         mainEntityOfPage: { "@type": "WebPage", "@id": absoluteUrl(path) },
         author: {
           "@type": "Person",

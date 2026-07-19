@@ -24,6 +24,7 @@ export default async function EditArticlePage({
           title: article.title,
           slug: article.slug,
           summary: article.summary,
+          seoImageUrl: article.seoImageUrl,
           tags: article.tags,
           bodyHtml: article.bodyHtml,
           status: article.status,

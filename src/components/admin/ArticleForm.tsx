@@ -1,6 +1,7 @@
 "use client";
 
-import { ArrowLeft, Eye, Save } from "lucide-react";
+import { ArrowLeft, Eye, ImageUp, Save, Trash2 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useActionState, useRef, useState } from "react";
 import ArticleBodyField, {
@@ -16,6 +17,7 @@ interface ArticleFormValue {
   title: string;
   slug: string;
   summary: string;
+  seoImageUrl: string | null;
   tags: string[];
   bodyHtml: string;
   status: "DRAFT" | "PUBLISHED";
@@ -43,13 +45,45 @@ export default function ArticleForm({
   );
   const editorRef = useRef<ArticleBodyFieldHandle>(null);
   const bodyInput = useRef<HTMLInputElement>(null);
+  const seoImageInput = useRef<HTMLInputElement>(null);
   const [title, setTitle] = useState(article?.title ?? "");
   const [slug, setSlug] = useState(article?.slug ?? "");
   const [slugTouched, setSlugTouched] = useState(Boolean(article));
+  const [seoImageUrl, setSeoImageUrl] = useState(article?.seoImageUrl ?? "");
+  const [uploadingSeoImage, setUploadingSeoImage] = useState(false);
+  const [seoImageError, setSeoImageError] = useState<string | null>(null);
 
   function syncBody() {
     if (bodyInput.current) {
       bodyInput.current.value = editorRef.current?.getHTML() ?? "";
+    }
+  }
+
+  async function uploadSeoImage(file: File) {
+    setUploadingSeoImage(true);
+    setSeoImageError(null);
+    try {
+      const formData = new FormData();
+      formData.set("file", file);
+      const response = await fetch("/api/admin/articles/images/", {
+        method: "POST",
+        body: formData,
+      });
+      const result = (await response.json()) as {
+        url?: string;
+        error?: string;
+      };
+      if (!response.ok || !result.url) {
+        throw new Error(result.error || "Upload failed");
+      }
+      setSeoImageUrl(result.url);
+    } catch (error) {
+      setSeoImageError(
+        error instanceof Error ? error.message : "Image upload failed.",
+      );
+    } finally {
+      setUploadingSeoImage(false);
+      if (seoImageInput.current) seoImageInput.current.value = "";
     }
   }
 
@@ -217,6 +251,84 @@ export default function ArticleForm({
             <p className={styles.hint}>Comma-separated; up to 10 tags.</p>
             {state.fieldErrors?.tags && (
               <p className={styles.fieldError}>{state.fieldErrors.tags}</p>
+            )}
+          </div>
+          <div className={styles.fieldFull}>
+            <label htmlFor="seo-image">SEO sharing image</label>
+            <input type="hidden" name="seoImageUrl" value={seoImageUrl} />
+            <input
+              ref={seoImageInput}
+              id="seo-image"
+              className={styles.hiddenFileInput}
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
+              disabled={uploadingSeoImage}
+              onChange={(event) => {
+                const file = event.target.files?.[0];
+                if (file) void uploadSeoImage(file);
+              }}
+            />
+            {seoImageUrl ? (
+              <div className={styles.seoImagePreview}>
+                <Image
+                  src={seoImageUrl}
+                  alt="Current SEO sharing preview"
+                  width={1200}
+                  height={630}
+                  unoptimized
+                />
+                <div>
+                  <p>Ready for social sharing</p>
+                  <span>{seoImageUrl}</span>
+                  <div className={styles.seoImageActions}>
+                    <button
+                      type="button"
+                      className={styles.secondaryAction}
+                      disabled={uploadingSeoImage}
+                      onClick={() => seoImageInput.current?.click()}
+                    >
+                      <ImageUp aria-hidden="true" size={16} />
+                      {uploadingSeoImage ? "Uploading…" : "Replace image"}
+                    </button>
+                    <button
+                      type="button"
+                      className={styles.removeImageButton}
+                      disabled={uploadingSeoImage}
+                      onClick={() => {
+                        setSeoImageUrl("");
+                        setSeoImageError(null);
+                      }}
+                    >
+                      <Trash2 aria-hidden="true" size={16} />
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <button
+                type="button"
+                className={styles.seoImageDropzone}
+                disabled={uploadingSeoImage}
+                onClick={() => seoImageInput.current?.click()}
+              >
+                <ImageUp aria-hidden="true" size={22} />
+                <strong>
+                  {uploadingSeoImage ? "Uploading to R2…" : "Upload SEO image"}
+                </strong>
+                <span>
+                  Recommended: 1200 × 630 px · JPEG, PNG, WebP or AVIF
+                </span>
+              </button>
+            )}
+            <p className={styles.hint}>
+              Used by search previews, Open Graph, and social sharing cards. The
+              generated article card is used when no image is uploaded.
+            </p>
+            {(seoImageError || state.fieldErrors?.seoImageUrl) && (
+              <p className={styles.fieldError} role="alert">
+                {seoImageError || state.fieldErrors?.seoImageUrl}
+              </p>
             )}
           </div>
         </div>
