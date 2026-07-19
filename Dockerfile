@@ -10,7 +10,16 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install --frozen-lockfile
 
 COPY . .
-RUN pnpm exec prisma generate && pnpm build
+
+RUN --mount=type=secret,id=production_env_b64,required=false \
+    if [ -f /run/secrets/production_env_b64 ]; then \
+      base64 -d /run/secrets/production_env_b64 > /tmp/production.env; \
+      set -a; \
+      . /tmp/production.env; \
+      set +a; \
+      rm /tmp/production.env; \
+    fi; \
+    pnpm exec prisma generate && pnpm build
 
 FROM node:24-alpine AS runtime
 
