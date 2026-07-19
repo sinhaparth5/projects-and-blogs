@@ -1,0 +1,338 @@
+.container {
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  position: relative;
+  margin: 0 auto;
+  overflow: auto;
+  padding: 1rem;
+  min-height: 100dvh;
+  font-family: var(--font-blog-body), Georgia, serif;
+  line-height: 1.6;
+  color: black;
+  background-color: #ffffff;
+}
+
+/* Same neutralization as the resume: Nextra's global article rule centers
+   and pads every <article>. */
+.container :where(article) {
+  margin-inline: 0;
+  padding: 0;
+}
+
+.container :where(h1, h2, h3) {
+  font-family: var(--font-blog-heading), sans-serif;
+  font-weight: 600;
+}
+
+.content {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 42rem;
+  background-color: white;
+}
+
+.content > * + * {
+  margin-top: 2rem;
+}
+
+/* ---- Masthead: centered all-caps blog title with nav beneath ---- */
+
+.masthead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+}
+
+.mastheadTitle {
+  font-family: var(--font-blog-heading), sans-serif;
+  font-size: 1.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+}
+
+.mastheadTitle a {
+  color: black;
+  text-decoration: none;
+}
+
+.mastheadTitle a:hover {
+  text-decoration: underline;
+}
+
+.mastheadTitle a:focus-visible {
+  outline: 2px solid #111827;
+  outline-offset: 2px;
+  border-radius: 0.125rem;
+}
+
+.mastheadNav {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.navLink {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #475569;
+  text-decoration: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  transition: background-color 0.2s;
+}
+
+.navLink:hover {
+  background-color: #f1f5f9;
+  color: black;
+}
+
+.navLink:focus-visible {
+  outline: 2px solid #111827;
+  outline-offset: 2px;
+}
+
+.navLinkActive {
+  background-color: #f1f5f9;
+  color: black;
+}
+
+/* ---- Blog list ---- */
+
+.description {
+  font-family: var(--font-blog-body), Georgia, serif;
+  font-size: 0.875rem;
+  color: black;
+  text-align: center;
+  text-wrap: pretty;
+}
+
+.postList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.post {
+  border-radius: 0.5rem;
+  background-color: white;
+  padding: 0.25rem 0;
+}
+
+.postHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.postTitle {
+  font-size: 1rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+}
+
+.postTitle a {
+  text-decoration: none;
+  color: black;
+}
+
+.postTitle a:hover {
+  text-decoration: underline;
+}
+
+.postTitle a:focus-visible {
+  outline: 2px solid #111827;
+  outline-offset: 2px;
+  border-radius: 0.125rem;
+}
+
+.postDate {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.25rem;
+  font-family: var(--font-blog-heading), sans-serif;
+  white-space: nowrap;
+}
+
+.postSummary {
+  margin-top: 0.5rem;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.8);
+  text-wrap: pretty;
+  font-family: var(--font-blog-body), Georgia, serif;
+}
+
+.postTags {
+  margin-top: 0.5rem;
+  display: flex;
+  list-style: none;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  padding: 0;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 0.375rem;
+  border: 1px solid transparent;
+  padding: 0.125rem 0.5rem;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  transition: color 0.2s;
+  white-space: nowrap;
+  background-color: #f1f5f9;
+  color: #475569;
+  vertical-align: middle;
+  font-size: 0.75rem;
+}
+
+.empty {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-family: var(--font-mono);
+}
+
+/* ---- Post prose (MDX content), CV design language ---- */
+
+.prose :where(h1) {
+  font-size: 1.875rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+
+.prose :where(h2) {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose :where(h3) {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose :where(p, li) {
+  font-family: var(--font-blog-body), Georgia, serif;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: rgba(0, 0, 0, 0.8);
+  text-wrap: pretty;
+}
+
+.prose :where(p + p) {
+  margin-top: 0.75rem;
+}
+
+.prose :where(ul, ol) {
+  margin-top: 0.75rem;
+  padding-left: 1.25rem;
+}
+
+.prose :where(ul) {
+  list-style-type: disc;
+}
+
+.prose :where(ol) {
+  list-style-type: decimal;
+}
+
+.prose :where(li + li) {
+  margin-top: 0.375rem;
+}
+
+.prose :where(a) {
+  color: black;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose :where(a:hover) {
+  color: #475569;
+}
+
+.prose :where(a:focus-visible) {
+  outline: 2px solid #111827;
+  outline-offset: 2px;
+  border-radius: 0.125rem;
+}
+
+.prose :where(code) {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  background-color: #f1f5f9;
+  color: #475569;
+  border-radius: 0.25rem;
+  padding: 0.125rem 0.25rem;
+}
+
+.prose :where(pre) {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  background-color: #f1f5f9;
+  overflow-x: auto;
+}
+
+.prose :where(pre code) {
+  background-color: transparent;
+  padding: 0;
+}
+
+.prose :where(blockquote) {
+  margin-top: 0.75rem;
+  padding-left: 0.75rem;
+  border-left: 2px solid #e5e7eb;
+  color: #6b7280;
+}
+
+.prose :where(hr) {
+  margin-top: 2rem;
+  border: 0;
+  border-top: 1px solid #e5e7eb;
+}
+
+.prose :where(strong) {
+  font-weight: 600;
+  color: black;
+}
+
+.prose :where(img) {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+}
+
+/* Byline under the post h1 — authored in MDX as <p className="byline">. */
+.prose :global(.byline) {
+  font-family: var(--font-blog-heading), sans-serif;
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tag,
+  .navLink {
+    transition: none;
+  }
+}

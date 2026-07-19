@@ -1,0 +1,11 @@
+.root {
+  width: 100%;
+}
+
+.root :global(.cf-turnstile) {
+  width: 100%;
+}
+
+.root :global(iframe) {
+  max-width: 100%;
+}
