@@ -13,13 +13,11 @@ COPY . .
 
 RUN --mount=type=secret,id=production_env_b64,required=false \
     if [ -f /run/secrets/production_env_b64 ]; then \
-      base64 -d /run/secrets/production_env_b64 > /tmp/production.env; \
-      set -a; \
-      . /tmp/production.env; \
-      set +a; \
-      rm /tmp/production.env; \
+      base64 -d /run/secrets/production_env_b64 > /app/.env.production; \
     fi; \
-    pnpm exec prisma generate && pnpm build
+    DOTENV_CONFIG_PATH=/app/.env.production pnpm exec prisma generate && \
+    pnpm build; \
+    rm -f /app/.env.production
 
 FROM node:24-alpine AS runtime
 

@@ -49,12 +49,20 @@ jobs:
           set -eu
           ENV_FILE="$RUNNER_TEMP/production.env"
           trap 'rm -f "$ENV_FILE"' EXIT
-          printf '%s' "$PRODUCTION_ENV_B64" | base64 --decode > "$ENV_FILE"
+          if [ -z "${PRODUCTION_ENV_B64:-}" ]; then
+            echo "::error::The PRODUCTION_ENV_B64 repository secret is empty or unavailable."
+            exit 1
+          fi
+          if ! printf '%s' "$PRODUCTION_ENV_B64" | base64 --decode > "$ENV_FILE"; then
+            echo "::error::PRODUCTION_ENV_B64 is not valid base64."
+            exit 1
+          fi
           chmod 600 "$ENV_FILE"
-          set -a
-          . "$ENV_FILE"
-          set +a
-          pnpm exec prisma migrate deploy
+          if ! grep -Eq '^[[:space:]]*POSTGRES_URL=' "$ENV_FILE"; then
+            echo "::error::The decoded production environment does not define POSTGRES_URL."
+            exit 1
+          fi
+          DOTENV_CONFIG_PATH="$ENV_FILE" pnpm exec prisma migrate deploy
 
       - name: Log in to GHCR
         uses: docker/login-action@v3
