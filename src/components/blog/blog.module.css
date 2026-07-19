@@ -234,19 +234,13 @@
   scrollbar-width: thin;
 }
 
-.stickyRail {
+.notesRail .stickyRail {
   position: sticky;
   top: clamp(1rem, 4vh, 2rem);
   max-height: calc(100dvh - clamp(2rem, 8vh, 4rem));
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;
-}
-
-.contentsRail .stickyRail {
-  position: static;
-  max-height: none;
-  overflow: visible;
 }
 
 .railTitle {
@@ -889,9 +883,6 @@
   }
 
   .contentsRail .stickyRail {
-    position: static;
-    max-height: none;
-    overflow: visible;
     border: 1px solid #e2e8f0;
     border-radius: 0.625rem;
     padding: 0.75rem;
