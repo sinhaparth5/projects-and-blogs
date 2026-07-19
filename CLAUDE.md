@@ -29,15 +29,19 @@ Run `prisma migrate deploy` outside the application container before deploying a
 
 ## Environment
 
-Copy `.env.example` to `.env` for local development. Required runtime values are `POSTGRES_URL`, `ADMIN_PASSWORD`, `SESSION_SECRET`, `R2_ENDPOINT`, `R2_ACCESS_KEY`, `R2_SECRET_KEY`, `R2_BUCKET`, and `R2_PUBLIC_BASE_URL`. Generate `SESSION_SECRET` with at least 32 random bytes and never commit `.env`.
+Copy `.env.example` to `.env` for local development. Required runtime values are `POSTGRES_URL`, `ADMIN_PASSWORD`, `SESSION_SECRET`, `R2_ENDPOINT`, `R2_ACCESS_KEY`, `R2_SECRET_KEY`, `R2_BUCKET`, and `R2_BASE_URL`. Generate `SESSION_SECRET` with at least 32 random bytes and never commit `.env`.
 
 ## Architecture
 
 Next.js 16 App Router site with Nextra 4 for documentation and Prisma/Postgres-backed public blogs. Production uses `output: "standalone"` and requires `POSTGRES_URL` at runtime.
 
 - **Articles** are stored in Postgres and queried through the singleton in `src/lib/db.ts`. Public `/pb/blogs/*` and `/sb/blogs/*` routes use request-time rendering so builds never query or snapshot the database.
+- **Article HTML** is sanitized once before persistence with `src/lib/articles/sanitize.ts`; render-only heading, figure, and reference transformations live in `html-transform.ts`. Do not store transformed HTML because it must remain round-trippable through Tiptap.
+- **Article mutations** live in `src/lib/admin/actions.ts`; they authorize inside every action, validate through `article-input.ts`, sanitize before persistence, and revalidate both admin and public paths.
+- **Admin UI** lives under the protected `src/app/admin/(workspace)/` route group. The shared form uses the Tiptap components in `src/components/editor/`; keep server authorization in actions even though proxy and layouts also check sessions.
 - **Prisma** schema and migrations live in `prisma/`; seed data is in `prisma/seed.ts`. Articles belong to seeded `parth` and `shine` users.
 - **Admin auth** uses `ADMIN_PASSWORD` plus a seven-day HS256 session cookie signed with `SESSION_SECRET`. `src/proxy.ts` performs optimistic route checks only; every protected page, action, and route must also call `requireAdmin()` or `isAdmin()`.
+- **Article images** are uploaded by the authenticated Node route at `/api/admin/articles/images/` through R2's S3-compatible API. Raster signatures and an 8 MB limit are enforced before upload; public URLs use `R2_BASE_URL`.
 - **MDX** remains for documentation under `src/app/docs/`, wrapped in the Nextra blog `Layout`. The root layout is plain Next.
 - **`mdx-components.tsx`** (repo root) supplies global MDX components from `nextra-theme-blog`. It's wired to the MDX pipeline via the `turbopack.resolveAlias["next-mdx-import-source-file"]` entry in `next.config.ts` — don't move or rename it without updating that alias.
 - **Styling**: CSS Modules work in both TSX and MDX (colocated `*.module.css`, imported and referenced via the styles object). Nextra's theme stylesheet is imported once in the root layout.

@@ -14,7 +14,7 @@ export default function PostShell({
     <main className={`${styles.container} ${blogFontVariables}`}>
       <div className={styles.content}>
         <Masthead data={data} />
-        <article className={styles.prose}>{children}</article>
+        {children}
       </div>
     </main>
   );
