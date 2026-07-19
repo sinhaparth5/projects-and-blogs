@@ -182,11 +182,4 @@ export const parth: ResumeData = {
       active: true,
     },
   ],
-  education: [
-    {
-      institution: "Wrocław University of Technology",
-      period: "2007 - 2010",
-      degree: "Bachelor's Degree in Control systems engineering and Robotics",
-    },
-  ],
 };

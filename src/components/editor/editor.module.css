@@ -129,6 +129,23 @@
   font-size: 0.875em;
 }
 
+.content :global(.tiptap-mathematics-render--editable) {
+  border-radius: 0.25rem;
+  padding: 0.125rem 0.25rem;
+  cursor: pointer;
+  transition: background-color 150ms ease-out;
+}
+
+.content :global(.tiptap-mathematics-render--editable:hover) {
+  background: #f4f4f5;
+}
+
+.content :global(.tiptap-mathematics-render[data-type="block-math"]) {
+  overflow-x: auto;
+  padding-block: 0.75rem;
+  text-align: center;
+}
+
 .content :global(.tiptap img) {
   max-width: 100%;
   height: auto;

@@ -45,3 +45,20 @@ test("transformArticleHtml adds stable headings, captions, and unique references
     },
   ]);
 });
+
+test("math nodes survive sanitization and render as accessible KaTeX", () => {
+  const sanitized = sanitizeArticleHtml(`
+    <p>Energy: <span data-type="inline-math" data-latex="E = mc^2"></span></p>
+    <div data-type="block-math" data-latex="\\frac{a}{b}"></div>
+  `);
+  const result = transformArticleHtml(sanitized);
+
+  assert.match(sanitized, /data-type="inline-math" data-latex="E = mc\^2"/);
+  assert.match(
+    sanitized,
+    /data-type="block-math" data-latex="\\frac\{a\}\{b\}"/,
+  );
+  assert.match(result.html, /class="article-math-inline"/);
+  assert.match(result.html, /class="article-math-block"/);
+  assert.match(result.html, /class="katex-mathml"/);
+});

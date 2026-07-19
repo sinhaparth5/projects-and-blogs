@@ -1,0 +1,127 @@
+.statePage {
+  width: min(100% - 2rem, 48rem);
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  margin-inline: auto;
+  padding-block: 4rem;
+  color: var(--color-ink);
+}
+
+.stateCard {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.5rem, 5vw, 3rem);
+  background: var(--color-canvas);
+}
+
+.eyebrow {
+  color: var(--color-ink-subtle);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.stateCard h1 {
+  margin-top: 0.75rem;
+  font-size: clamp(2rem, 7vw, 3.5rem);
+  line-height: 1;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+
+.stateCard > p:not(.eyebrow) {
+  max-width: 34rem;
+  margin-top: 1rem;
+  color: var(--color-ink-muted);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  margin-top: 1.5rem;
+}
+
+.actions a,
+.actions button {
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: var(--radius-md);
+  padding: 0.625rem 0.875rem;
+  color: #ffffff;
+  background: var(--color-ink);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.actions a:last-child {
+  color: var(--color-ink);
+  background: var(--color-surface-muted);
+}
+
+.actions a:focus-visible,
+.actions button:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.skeleton {
+  width: min(100% - 2rem, 48rem);
+  min-height: 100dvh;
+  display: grid;
+  align-content: center;
+  gap: 1rem;
+  margin-inline: auto;
+}
+
+.skeleton span {
+  display: block;
+  height: 1rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-muted);
+  animation: pulse 1.4s ease-in-out infinite alternate;
+}
+
+.skeleton span:first-child {
+  width: 35%;
+  height: 0.75rem;
+}
+
+.skeleton span:nth-child(2) {
+  width: 85%;
+  height: 3.5rem;
+}
+
+.skeleton span:nth-child(3) {
+  width: 65%;
+}
+
+.skeleton span:nth-child(4) {
+  width: 100%;
+  height: 12rem;
+}
+
+@keyframes pulse {
+  from {
+    opacity: 0.45;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton span {
+    animation: none;
+  }
+}

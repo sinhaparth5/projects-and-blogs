@@ -87,11 +87,4 @@ export const shine: ResumeData = {
       technologies: ["TypeScript", "Next.js", "CSS"],
     },
   ],
-  education: [
-    {
-      institution: "University Placeholder",
-      period: "2016 - 2020",
-      degree: "Bachelor's Degree in Design and Computer Science",
-    },
-  ],
 };

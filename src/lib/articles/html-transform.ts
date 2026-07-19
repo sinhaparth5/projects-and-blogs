@@ -1,4 +1,5 @@
 import { load } from "cheerio";
+import katex from "katex";
 
 export interface HeadingEntry {
   id: string;
@@ -63,6 +64,22 @@ export function transformArticleHtml(sourceHtml: string) {
     image.wrap("<figure></figure>");
     image.parent().append($("<figcaption></figcaption>").text(caption));
   });
+
+  $("span[data-type='inline-math'], div[data-type='block-math']").each(
+    (_index, element) => {
+      const math = $(element);
+      const latex = math.attr("data-latex") ?? "";
+      const displayMode = math.attr("data-type") === "block-math";
+      math.html(
+        katex.renderToString(latex, {
+          displayMode,
+          throwOnError: false,
+          output: "htmlAndMathml",
+        }),
+      );
+      math.addClass(displayMode ? "article-math-block" : "article-math-inline");
+    },
+  );
 
   $("span[data-ref-id]").each((_index, element) => {
     const reference = $(element);

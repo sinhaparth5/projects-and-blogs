@@ -3,6 +3,7 @@
 import CharacterCount from "@tiptap/extension-character-count";
 import Highlight from "@tiptap/extension-highlight";
 import ImageExtension from "@tiptap/extension-image";
+import Mathematics from "@tiptap/extension-mathematics";
 import Placeholder from "@tiptap/extension-placeholder";
 import { TableKit } from "@tiptap/extension-table";
 import TextAlign from "@tiptap/extension-text-align";
@@ -16,6 +17,7 @@ import {
   AlignLeft,
   AlignRight,
   Bold,
+  BookOpenText,
   Code2,
   Heading2,
   Heading3,
@@ -25,7 +27,9 @@ import {
   List,
   ListOrdered,
   Quote,
+  Radical,
   Redo2,
+  Sigma,
   Strikethrough,
   Table2,
   Underline,
@@ -75,6 +79,12 @@ type RefDialogState = {
   refId: number;
   existing: ExistingRef[];
   append?: { pos: number; attachedIds: number[] };
+};
+
+type MathDialogState = {
+  kind: "inline" | "block";
+  latex: string;
+  pos?: number;
 };
 
 function accessedDate() {
@@ -158,6 +168,7 @@ export default forwardRef<
   const imageDialog = useRef<HTMLDialogElement>(null);
   const linkDialog = useRef<HTMLDialogElement>(null);
   const referenceDialog = useRef<HTMLDialogElement>(null);
+  const mathDialogRef = useRef<HTMLDialogElement>(null);
   const noticeDialog = useRef<HTMLDialogElement>(null);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
@@ -167,6 +178,7 @@ export default forwardRef<
   const [linkUrl, setLinkUrl] = useState("");
   const [linkOpen, setLinkOpen] = useState(false);
   const [referenceNotice, setReferenceNotice] = useState(false);
+  const [mathDialog, setMathDialog] = useState<MathDialogState | null>(null);
   const [refDialog, setRefDialog] = useState<RefDialogState | null>(null);
   const [refType, setRefType] = useState<"url" | "book">("url");
   const [sourceUrl, setSourceUrl] = useState("");
@@ -191,6 +203,25 @@ export default forwardRef<
       Color,
       CharacterCount,
       TableKit.configure({ table: { resizable: true } }),
+      Mathematics.configure({
+        inlineOptions: {
+          onClick: (node, pos) =>
+            setMathDialog({
+              kind: "inline",
+              latex: String(node.attrs.latex ?? ""),
+              pos,
+            }),
+        },
+        blockOptions: {
+          onClick: (node, pos) =>
+            setMathDialog({
+              kind: "block",
+              latex: String(node.attrs.latex ?? ""),
+              pos,
+            }),
+        },
+        katexOptions: { throwOnError: false },
+      }),
       ReferenceExtension,
     ],
     content: initialValue,
@@ -224,6 +255,11 @@ export default forwardRef<
     if (referenceNotice && dialog && !dialog.open) dialog.showModal();
   }, [referenceNotice]);
 
+  useEffect(() => {
+    const dialog = mathDialogRef.current;
+    if (mathDialog && dialog && !dialog.open) dialog.showModal();
+  }, [mathDialog]);
+
   const state = useEditorState({
     editor,
     selector: ({ editor: current }) => ({
@@ -250,6 +286,37 @@ export default forwardRef<
   function addLink() {
     setLinkUrl(editor?.getAttributes("link").href ?? "https://");
     setLinkOpen(true);
+  }
+
+  function openMathDialog(kind: MathDialogState["kind"]) {
+    const selectedLatex = editor?.state.doc
+      .textBetween(editor.state.selection.from, editor.state.selection.to, " ")
+      .trim();
+    setMathDialog({ kind, latex: selectedLatex ?? "" });
+  }
+
+  function closeMathDialog() {
+    mathDialogRef.current?.close();
+    setMathDialog(null);
+  }
+
+  function saveMath() {
+    if (!editor || !mathDialog?.latex.trim()) return;
+    const latex = mathDialog.latex.trim();
+    const chain = editor.chain().focus();
+
+    if (mathDialog.pos !== undefined) {
+      chain.setNodeSelection(mathDialog.pos);
+      if (mathDialog.kind === "inline") chain.updateInlineMath({ latex });
+      else chain.updateBlockMath({ latex });
+    } else {
+      chain.deleteSelection();
+      if (mathDialog.kind === "inline") chain.insertInlineMath({ latex });
+      else chain.insertBlockMath({ latex });
+    }
+
+    chain.run();
+    closeMathDialog();
   }
 
   function collectReferences() {
@@ -591,7 +658,19 @@ export default forwardRef<
           <Upload size={17} />
         </ToolbarButton>
         <ToolbarButton label="Add reference" onClick={addReference}>
-          <Quote size={17} />
+          <BookOpenText size={17} />
+        </ToolbarButton>
+        <ToolbarButton
+          label="Insert inline LaTeX formula"
+          onClick={() => openMathDialog("inline")}
+        >
+          <Radical size={17} />
+        </ToolbarButton>
+        <ToolbarButton
+          label="Insert block LaTeX formula"
+          onClick={() => openMathDialog("block")}
+        >
+          <Sigma size={17} />
         </ToolbarButton>
         <ToolbarButton
           label="Insert table"
@@ -643,6 +722,85 @@ export default forwardRef<
       <footer className={styles.footer}>
         {state?.words ?? 0} words · {state?.characters ?? 0} characters
       </footer>
+      <dialog
+        ref={mathDialogRef}
+        className={styles.imageDialog}
+        aria-labelledby="math-dialog-title"
+        onCancel={(event) => {
+          event.preventDefault();
+          closeMathDialog();
+        }}
+      >
+        <div className={styles.dialogPanel}>
+          <div className={styles.dialogHeader}>
+            <div>
+              <p className={styles.dialogEyebrow}>LaTeX mathematics</p>
+              <h2 id="math-dialog-title">
+                {mathDialog?.pos !== undefined ? "Edit" : "Insert"}{" "}
+                {mathDialog?.kind === "block" ? "block" : "inline"} formula
+              </h2>
+            </div>
+            <button
+              type="button"
+              className={styles.dialogClose}
+              aria-label="Close formula dialog"
+              onClick={closeMathDialog}
+            >
+              <X aria-hidden="true" size={18} />
+            </button>
+          </div>
+          <p className={styles.dialogCopy}>
+            {mathDialog?.kind === "block"
+              ? "Block formulas appear centred on a separate line."
+              : "Inline formulas flow naturally with the surrounding text."}
+          </p>
+          <div className={styles.dialogField}>
+            <label htmlFor="math-latex">LaTeX formula</label>
+            <textarea
+              id="math-latex"
+              rows={4}
+              autoFocus
+              spellCheck={false}
+              value={mathDialog?.latex ?? ""}
+              placeholder="e.g. E = mc^2 or \\frac{a}{b}"
+              onChange={(event) =>
+                setMathDialog((current) =>
+                  current ? { ...current, latex: event.target.value } : null,
+                )
+              }
+              onKeyDown={(event) => {
+                if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
+                  event.preventDefault();
+                  saveMath();
+                }
+              }}
+            />
+            <p>
+              Use Ctrl/Command + Enter to save. Dollar-sign wrappers are not
+              needed.
+            </p>
+          </div>
+          <div className={styles.dialogActions}>
+            <button
+              type="button"
+              className={styles.dialogSecondary}
+              onClick={closeMathDialog}
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              className={styles.dialogPrimary}
+              disabled={!mathDialog?.latex.trim()}
+              onClick={saveMath}
+            >
+              {mathDialog?.pos !== undefined
+                ? "Update formula"
+                : "Insert formula"}
+            </button>
+          </div>
+        </div>
+      </dialog>
       <dialog
         ref={linkDialog}
         className={styles.imageDialog}

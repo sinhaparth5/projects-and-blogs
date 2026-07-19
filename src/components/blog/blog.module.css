@@ -295,6 +295,30 @@
   font-size: 0.6875rem;
 }
 
+.newNoteButton {
+  flex: 0 0 auto;
+  width: 2.75rem;
+  height: 2.75rem;
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-ink-muted);
+  background: var(--color-canvas);
+  cursor: pointer;
+  transition-property: color, background-color, transform;
+  transition-duration: var(--motion-fast);
+}
+
+.newNoteButton:hover {
+  color: var(--color-ink);
+  background: var(--color-surface-muted);
+}
+
+.newNoteButton:active {
+  transform: scale(0.96);
+}
+
 .noteComposer,
 .notesList li {
   position: relative;
@@ -331,6 +355,7 @@
 }
 
 .noteComposer textarea:focus-visible,
+.newNoteButton:focus-visible,
 .noteClose:focus-visible,
 .saveNote:focus-visible,
 .notesList button:focus-visible,
@@ -343,8 +368,8 @@
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
-  width: 2rem;
-  height: 2rem;
+  width: 2.75rem;
+  height: 2.75rem;
   display: inline-grid;
   place-items: center;
   border: 0;
@@ -355,7 +380,7 @@
 }
 
 .saveNote {
-  min-height: 2.5rem;
+  min-height: 2.75rem;
   width: 100%;
   display: inline-flex;
   align-items: center;
@@ -396,8 +421,8 @@
   position: absolute;
   right: 0.375rem;
   bottom: 0.375rem;
-  width: 2rem;
-  height: 2rem;
+  width: 2.75rem;
+  height: 2.75rem;
   display: inline-grid;
   place-items: center;
   border: 0;
@@ -415,7 +440,7 @@
 .selectionAction {
   position: absolute;
   z-index: 20;
-  min-height: 2.5rem;
+  min-height: 2.75rem;
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
@@ -548,6 +573,18 @@
   white-space: nowrap;
 }
 
+.prose :global(.article-math-inline) {
+  white-space: nowrap;
+}
+
+.prose :global(.article-math-block) {
+  max-width: 100%;
+  margin-block: 1.5rem;
+  overflow-x: auto;
+  padding-block: 0.5rem;
+  text-align: center;
+}
+
 .prose :global(.article-ref-num) {
   margin-left: 0.125rem;
   font-family: var(--font-mono);
@@ -630,6 +667,111 @@
   text-decoration-color: #475569;
 }
 
+.articleNavigation {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.articleNavigation a {
+  min-height: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0.875rem 1rem;
+  color: var(--color-ink);
+  background: var(--color-surface);
+  text-decoration: none;
+  transition-property: border-color, background-color, transform;
+  transition-duration: var(--motion-fast);
+}
+
+.articleNavigation a:last-child {
+  text-align: right;
+}
+
+.articleNavigation a:hover {
+  border-color: var(--color-border-strong);
+  background: var(--color-surface-muted);
+}
+
+.articleNavigation a:active {
+  transform: scale(0.98);
+}
+
+.articleNavigation span,
+.relatedArticles h2 {
+  color: var(--color-ink-subtle);
+  font-family: var(--font-blog-heading), sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.articleNavigation strong {
+  font-size: 0.875rem;
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+.relatedArticles {
+  margin-top: 2.5rem;
+}
+
+.relatedArticles > div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.relatedArticles a {
+  min-height: 7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0.875rem;
+  color: var(--color-ink);
+  background: var(--color-canvas);
+  text-decoration: none;
+}
+
+.relatedArticles a:hover {
+  background: var(--color-surface);
+}
+
+.relatedArticles strong {
+  font-family: var(--font-blog-heading), sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.35;
+  text-wrap: balance;
+}
+
+.relatedArticles a > span {
+  display: -webkit-box;
+  overflow: hidden;
+  color: var(--color-ink-muted);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.articleNavigation a:focus-visible,
+.relatedArticles a:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
 /* Byline under the post h1. */
 .byline {
   font-family: var(--font-blog-heading), sans-serif;
@@ -686,12 +828,35 @@
     padding: 0.75rem;
     background: #f8fafc;
   }
+
+  .relatedArticles > div {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .articleNavigation {
+    grid-template-columns: 1fr;
+  }
+
+  .articleNavigation > span {
+    display: none;
+  }
+
+  .articleNavigation a:last-child {
+    text-align: left;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .tag,
   .navLink,
-  .contentsList a {
+  .contentsList a,
+  .newNoteButton {
+    transition: none;
+  }
+
+  .articleNavigation a {
     transition: none;
   }
 }

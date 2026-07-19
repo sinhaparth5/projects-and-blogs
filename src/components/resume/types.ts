@@ -15,12 +15,6 @@ export interface WorkExperience {
   tags: string[];
 }
 
-export interface Education {
-  institution: string;
-  period: string;
-  degree: string;
-}
-
 export interface SideProject {
   name: string;
   url: string;
@@ -40,7 +34,6 @@ export interface ResumeData {
   };
   contactLinks: ContactLink[];
   workExperience: WorkExperience[];
-  education: Education[];
   skills: string[];
   sideProjects: SideProject[];
 }

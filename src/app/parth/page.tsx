@@ -1,20 +1,27 @@
+import { Blog } from "@prisma/client";
 import type { Metadata } from "next";
 import { parth } from "@/components/resume/data/parth";
 import Resume from "@/components/resume/Resume";
+import { getPublishedArticles } from "@/lib/articles/queries";
+import { absoluteUrl } from "@/lib/seo";
 
 const title = "Parth Sinha - Full Stack Engineer";
 const description =
   "Detail-oriented Full Stack Engineer dedicated to building high-quality products. Specializing in modern web technologies and scalable solutions.";
-const url = "https://cv.parthsinha.com";
+const url = "/parth/";
+const canonicalUrl = absoluteUrl(url);
 
 export const metadata: Metadata = {
-  title,
+  title: { absolute: title },
   description,
   keywords:
     "Full Stack Engineer, Web Developer, PHP, JavaScript, React, Node.js, Software Engineer",
   authors: [{ name: "Parth Sinha" }],
   robots: "index, follow",
-  alternates: { canonical: url },
+  alternates: {
+    canonical: url,
+    types: { "application/rss+xml": "/pb/blogs/feed.xml" },
+  },
   openGraph: {
     title,
     description,
@@ -25,14 +32,14 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/cv/images/profile.webp",
-        width: 1200,
-        height: 630,
+        width: 640,
+        height: 640,
         alt: "Parth Sinha - Full Stack Engineer Profile",
       },
     ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title,
     description,
     creator: "@sinhaparth555",
@@ -47,8 +54,8 @@ const jsonLd = {
   name: "Parth Sinha",
   jobTitle: "Full Stack Engineer",
   description,
-  url,
-  image: `${url}/cv/images/profile.webp`,
+  url: canonicalUrl,
+  image: absoluteUrl("/cv/images/profile.webp"),
   address: {
     "@type": "PostalAddress",
     addressLocality: "Oxford",
@@ -61,7 +68,18 @@ const jsonLd = {
   ],
 };
 
-export default function ParthPage() {
+export default async function ParthPage() {
+  const publishedArticles = await getPublishedArticles(Blog.pb);
+  const recentPosts = publishedArticles.slice(0, 3).map((article) => ({
+    title: article.title,
+    summary: article.summary,
+    date: article.publishedAt?.toISOString() ?? article.updatedAt.toISOString(),
+    href: `/pb/blogs/${article.slug}/`,
+    tags: article.tags,
+  }));
+  const lastUpdated =
+    publishedArticles[0]?.updatedAt.toISOString() ?? "2026-07-19T00:00:00.000Z";
+
   return (
     <>
       <script
@@ -71,7 +89,13 @@ export default function ParthPage() {
           __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
         }}
       />
-      <Resume data={parth} />
+      <Resume
+        data={parth}
+        recentPosts={recentPosts}
+        blogHref="/pb/blogs/"
+        feedHref="/pb/blogs/feed.xml"
+        lastUpdated={lastUpdated}
+      />
     </>
   );
 }

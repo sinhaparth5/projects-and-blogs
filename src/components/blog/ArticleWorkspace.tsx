@@ -157,7 +157,19 @@ export default function ArticleWorkspace({
               <p className={styles.railTitle}>Your notes</p>
               <span>Private to this browser</span>
             </div>
-            <NotebookPen aria-hidden="true" size={17} />
+            <button
+              type="button"
+              className={styles.newNoteButton}
+              aria-label="Add a general note"
+              title="Add a general note"
+              onClick={() => {
+                setDraftQuote("General note");
+                setDraftNote("");
+                requestAnimationFrame(() => noteInput.current?.focus());
+              }}
+            >
+              <NotebookPen aria-hidden="true" size={17} />
+            </button>
           </div>
 
           {draftQuote && (
@@ -192,7 +204,7 @@ export default function ArticleWorkspace({
           )}
 
           {notes.length > 0 ? (
-            <ol className={styles.notesList}>
+            <ol className={styles.notesList} aria-live="polite">
               {notes.map((note) => (
                 <li key={note.id}>
                   <blockquote>{note.quote}</blockquote>

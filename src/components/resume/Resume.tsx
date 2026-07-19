@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+import ResumeActions from "./ResumeActions";
 import styles from "./resume.module.css";
 import type { ResumeData } from "./types";
 
@@ -6,19 +8,48 @@ function stripProtocol(url: string) {
   return url.replace(/^https?:\/\//, "");
 }
 
-export default function Resume({ data }: { data: ResumeData }) {
-  const {
-    profile,
-    contactLinks,
-    workExperience,
-    education,
-    skills,
-    sideProjects,
-  } = data;
+export interface RecentResumePost {
+  title: string;
+  summary: string;
+  date: string;
+  href: string;
+  tags: string[];
+}
+
+const postDateFormat = new Intl.DateTimeFormat("en-GB", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+});
+
+export default function Resume({
+  data,
+  recentPosts,
+  blogHref,
+  feedHref,
+  lastUpdated,
+}: {
+  data: ResumeData;
+  recentPosts: RecentResumePost[];
+  blogHref: string;
+  feedHref: string;
+  lastUpdated: string;
+}) {
+  const { profile, contactLinks, workExperience, skills, sideProjects } = data;
+  const currentRole = workExperience[0];
+  const featuredProject =
+    sideProjects.find((project) => project.active) ?? sideProjects[0];
+  const otherProjects = sideProjects.filter(
+    (project) => project !== featuredProject,
+  );
+  const openSourceProject = sideProjects.find((project) =>
+    project.url.startsWith("https://github.com/"),
+  );
 
   return (
-    <main className={styles.container}>
+    <main id="main-content" className={styles.container} tabIndex={-1}>
       <div className={styles.content}>
+        <ResumeActions feedHref={feedHref} />
         <div className={styles.headerSection}>
           <div className={styles.profileInfo}>
             <h1>{profile.name}</h1>
@@ -87,6 +118,21 @@ export default function Resume({ data }: { data: ResumeData }) {
           </div>
         </div>
 
+        {currentRole && (
+          <section
+            className={styles.currentSection}
+            aria-labelledby="currently-heading"
+          >
+            <p id="currently-heading">Currently</p>
+            <div>
+              <strong>{currentRole.position}</strong>
+              <span>
+                at {currentRole.company} · {profile.location}
+              </span>
+            </div>
+          </section>
+        )}
+
         <section className={styles.workExperience}>
           <h2 id="work-experience">Work Experience</h2>
           <div className={styles.workList}>
@@ -145,23 +191,37 @@ export default function Resume({ data }: { data: ResumeData }) {
           </div>
         </section>
 
-        <section className={styles.educationSection}>
-          <h2 id="education-section">Education</h2>
-          <div className={styles.educationList}>
-            {education.map((edu) => (
-              <article key={edu.institution} className={styles.educationItem}>
-                <div className={styles.educationContent}>
-                  <div className={styles.educationHeader}>
-                    <h3 className={styles.educationInstitution}>
-                      {edu.institution}
-                    </h3>
-                    <div className={styles.educationPeriod}>{edu.period}</div>
-                  </div>
-                  <div className={styles.educationDegree}>{edu.degree}</div>
-                </div>
-              </article>
-            ))}
+        <section className={styles.writingSection}>
+          <div className={styles.writingHeading}>
+            <h2 id="recent-writing">Recent writing</h2>
+            <Link href={blogHref}>View all writing</Link>
           </div>
+          {recentPosts.length > 0 ? (
+            <div className={styles.writingList}>
+              {recentPosts.map((post) => (
+                <article key={post.href} className={styles.writingItem}>
+                  <time dateTime={post.date}>
+                    {postDateFormat.format(new Date(post.date))}
+                  </time>
+                  <div>
+                    <h3>
+                      <Link href={post.href}>{post.title}</Link>
+                    </h3>
+                    <p>{post.summary}</p>
+                    {post.tags.length > 0 && (
+                      <ul className={styles.writingTags}>
+                        {post.tags.slice(0, 3).map((tag) => (
+                          <li key={tag}>{tag}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <p className={styles.writingEmpty}>New articles are coming soon.</p>
+          )}
         </section>
 
         <section className={styles.skillsSection}>
@@ -177,8 +237,30 @@ export default function Resume({ data }: { data: ResumeData }) {
 
         <section className={styles.projectsSection}>
           <h2 id="side-projects">Side projects</h2>
+          {featuredProject && (
+            <article className={styles.featuredProject}>
+              <div>
+                <p>Featured project</p>
+                <h3>
+                  <a
+                    href={featuredProject.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {featuredProject.name}
+                  </a>
+                </h3>
+                <span>{featuredProject.description}</span>
+              </div>
+              <ul>
+                {featuredProject.technologies.map((technology) => (
+                  <li key={technology}>{technology}</li>
+                ))}
+              </ul>
+            </article>
+          )}
           <div className={styles.projectsGrid}>
-            {sideProjects.map((project) => (
+            {otherProjects.map((project) => (
               <article key={project.name} className={styles.projectCard}>
                 <div className={styles.projectContent}>
                   <div className={styles.projectHeader}>
@@ -217,6 +299,28 @@ export default function Resume({ data }: { data: ResumeData }) {
             ))}
           </div>
         </section>
+        {openSourceProject && (
+          <section className={styles.openSourceSection}>
+            <div>
+              <p>Open source</p>
+              <h2>{openSourceProject.name}</h2>
+              <span>{openSourceProject.description}</span>
+            </div>
+            <a
+              href={openSourceProject.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View on GitHub
+            </a>
+          </section>
+        )}
+        <footer className={styles.resumeFooter}>
+          Last updated{" "}
+          <time dateTime={lastUpdated}>
+            {postDateFormat.format(new Date(lastUpdated))}
+          </time>
+        </footer>
       </div>
     </main>
   );

@@ -7,9 +7,36 @@ import { getPublishedArticles } from "@/lib/articles/queries";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Blogs - Parth Sinha",
+  title: "Engineering Blog",
   description:
     "Blog posts by Parth Sinha on full-stack engineering, web performance, and tooling.",
+  keywords: [
+    "software engineering blog",
+    "full-stack development",
+    "React",
+    "Next.js",
+    "TypeScript",
+    "web performance",
+  ],
+  alternates: {
+    canonical: "/pb/blogs/",
+    types: { "application/rss+xml": "/pb/blogs/feed.xml" },
+  },
+  openGraph: {
+    type: "website",
+    url: "/pb/blogs/",
+    siteName: "Parth's Blog",
+    title: "Engineering Blog by Parth Sinha",
+    description:
+      "Practical writing on full-stack engineering, web performance, architecture, and developer tooling.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    creator: "@sinhaparth555",
+    title: "Engineering Blog by Parth Sinha",
+    description:
+      "Practical writing on full-stack engineering, web performance, architecture, and developer tooling.",
+  },
 };
 
 export default async function ParthBlogsPage() {

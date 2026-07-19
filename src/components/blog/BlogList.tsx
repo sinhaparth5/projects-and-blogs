@@ -13,7 +13,11 @@ export default function BlogList({ data }: { data: BlogListData }) {
   const { description, posts } = data;
 
   return (
-    <main className={`${styles.container} ${blogFontVariables}`}>
+    <main
+      id="main-content"
+      className={`${styles.container} ${blogFontVariables}`}
+      tabIndex={-1}
+    >
       <div className={styles.content}>
         <Masthead data={data} isHome />
 

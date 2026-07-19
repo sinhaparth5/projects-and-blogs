@@ -7,15 +7,7 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "includes": [
-      "**",
-      "!node_modules",
-      "!.next",
-      "!dist",
-      "!build",
-      "!out",
-      "!editor-design"
-    ]
+    "includes": ["**", "!node_modules", "!.next", "!dist", "!build", "!out"]
   },
   "formatter": {
     "enabled": true,

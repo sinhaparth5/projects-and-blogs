@@ -12,6 +12,7 @@ export const getPublishedArticles = cache((blog: Blog) =>
       summary: true,
       tags: true,
       publishedAt: true,
+      updatedAt: true,
     },
   }),
 );
@@ -23,6 +24,31 @@ export const getPublishedArticle = cache((blog: Blog, slug: string) =>
       author: { select: { displayName: true } },
     },
   }),
+);
+
+export const getPublishedArticleNavigation = cache(
+  async (blog: Blog, slug: string) => {
+    const articles = await db.article.findMany({
+      where: { blog, status: ArticleStatus.PUBLISHED },
+      orderBy: { publishedAt: "desc" },
+      select: { slug: true, title: true, summary: true, tags: true },
+    });
+    const index = articles.findIndex((article) => article.slug === slug);
+    if (index < 0) return { newer: null, older: null, related: [] };
+    const current = articles[index];
+    const related = articles
+      .filter(
+        (article, articleIndex) =>
+          articleIndex !== index &&
+          article.tags.some((tag) => current.tags.includes(tag)),
+      )
+      .slice(0, 3);
+    return {
+      newer: index > 0 ? articles[index - 1] : null,
+      older: index < articles.length - 1 ? articles[index + 1] : null,
+      related,
+    };
+  },
 );
 
 export const getAllArticles = cache(() =>

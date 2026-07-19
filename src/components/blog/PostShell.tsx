@@ -11,7 +11,11 @@ export default function PostShell({
   children: React.ReactNode;
 }) {
   return (
-    <main className={`${styles.container} ${blogFontVariables}`}>
+    <main
+      id="main-content"
+      className={`${styles.container} ${blogFontVariables}`}
+      tabIndex={-1}
+    >
       <div className={styles.content}>
         <Masthead data={data} />
         {children}
