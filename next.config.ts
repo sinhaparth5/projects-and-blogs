@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
   output: "standalone",
   reactCompiler: true,
   trailingSlash: true,
+  // Keep route metadata in <head> for every user agent instead of streaming it
+  // into the document body after dynamic routes begin rendering.
+  htmlLimitedBots: /.*/,
   images: {
     unoptimized: true,
   },

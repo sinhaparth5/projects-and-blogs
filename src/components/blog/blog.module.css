@@ -4,7 +4,6 @@
     "Courier New", monospace;
   position: relative;
   margin: 0 auto;
-  overflow-x: clip;
   padding: 1rem;
   min-height: 100dvh;
   font-family: var(--font-blog-body), Georgia, serif;
@@ -221,9 +220,18 @@
   align-items: start;
 }
 
-.contentsRail,
 .notesRail {
   align-self: stretch;
+}
+
+.contentsRail {
+  position: sticky;
+  top: clamp(1rem, 4vh, 2rem);
+  align-self: start;
+  max-height: calc(100dvh - clamp(2rem, 8vh, 4rem));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
 }
 
 .stickyRail {
@@ -233,6 +241,12 @@
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;
+}
+
+.contentsRail .stickyRail {
+  position: static;
+  max-height: none;
+  overflow: visible;
 }
 
 .railTitle {
@@ -866,6 +880,12 @@
     border-radius: 0.625rem;
     padding: 0.75rem;
     background: #f8fafc;
+  }
+
+  .contentsRail {
+    position: static;
+    max-height: none;
+    overflow: visible;
   }
 
   .relatedArticles > div {
