@@ -62,7 +62,7 @@ jobs:
             echo "::error::The decoded production environment does not define POSTGRES_URL."
             exit 1
           fi
-          if grep -Eq '^[[:space:]]*[A-Za-z_][A-Za-z0-9_]*=["'"']' "$ENV_FILE"; then
+          if grep -Eq "^[[:space:]]*[A-Za-z_][A-Za-z0-9_]*=[\"']" "$ENV_FILE"; then
             echo "::error::Production env values must not be wrapped in quotes because Docker --env-file preserves them."
             exit 1
           fi
