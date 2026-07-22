@@ -1,15 +1,35 @@
 .page {
-  --cream: #fff4df;
-  --coral: #c76548;
-  --peach: #ffa793;
-  --blush: #ffccc0;
-  --ink: #24201e;
+  --color-broom-50: oklch(99.37% 0.03 106.92);
+  --color-broom-100: oklch(98.39% 0.08 109.29);
+  --color-broom-200: oklch(97.54% 0.14 109.17);
+  --color-broom-300: oklch(96.17% 0.19 108.18);
+  --color-broom-400: oklch(94.55% 0.2 106.29);
+  --color-broom-500: oklch(93.10% 0.2 103.96);
+  --color-broom-600: oklch(75.47% 0.16 98);
+  --color-broom-700: oklch(61.38% 0.13 92.34);
+  --color-broom-800: oklch(52.15% 0.1 88.21);
+  --color-broom-900: oklch(46.07% 0.09 86.15);
+  --color-broom-950: oklch(31.38% 0.06 83.85);
+
+  --paper: #f4f1ea;
+  --ink: #1a1712;
+
+  /* Semantic accent roles derived from the broom scale. --accent-text sits at
+     700 (not 400/500) because large bold headline text needs ~3:1 contrast
+     against --paper; the vivid 400/500 steps read as near-white on light
+     backgrounds and are reserved for fills that sit *under* dark ink text. */
+  --accent-fill: var(--color-broom-400);
+  --accent-fill-strong: var(--color-broom-500);
+  --accent-soft: var(--color-broom-200);
+  --accent-line: var(--color-broom-600);
+  --accent-text: var(--color-broom-700);
+
   position: relative;
   overflow: clip;
   min-height: 100dvh;
   color: var(--ink);
-  background: var(--cream);
-  font-family: var(--font-display), Georgia, "Times New Roman", serif;
+  background: var(--paper);
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
 }
 
 .page :where(a) {
@@ -26,17 +46,23 @@
   justify-content: space-between;
   gap: 1.5rem;
   margin-inline: auto;
-  border-bottom: 1px solid rgba(36, 32, 30, 0.75);
+  border-bottom: 1px solid rgba(26, 23, 18, 0.75);
 }
 
 .brand {
   min-height: 2.75rem;
   display: inline-flex;
   align-items: center;
-  font-size: 1.65rem;
-  font-weight: 500;
-  letter-spacing: -0.06em;
+  gap: 0.5rem;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
   text-decoration: none;
+}
+
+.brand svg {
+  width: 1.15rem;
+  fill: var(--accent-text);
 }
 
 .siteHeader nav {
@@ -46,21 +72,33 @@
 }
 
 .siteHeader nav a {
+  position: relative;
   min-height: 2.75rem;
   display: inline-flex;
   align-items: center;
   padding-inline: 0.4rem;
-  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
   font-size: 0.75rem;
+  font-weight: 600;
   letter-spacing: 0.1em;
   text-decoration: none;
   text-transform: uppercase;
-  transition: color 180ms ease-out;
 }
 
-.siteHeader nav a:hover,
-.siteHeader nav .activeLink {
-  color: var(--coral);
+.siteHeader nav a::after {
+  content: "";
+  position: absolute;
+  right: 0.4rem;
+  bottom: 0.55rem;
+  left: 0.4rem;
+  height: 2px;
+  background: var(--accent-line);
+  opacity: 0;
+  transition: opacity 180ms ease-out;
+}
+
+.siteHeader nav a:hover::after,
+.siteHeader nav .activeLink::after {
+  opacity: 1;
 }
 
 .page a:focus-visible {
@@ -71,7 +109,7 @@
 
 .hero {
   position: relative;
-  min-height: clamp(42rem, 78vw, 62rem);
+  min-height: clamp(48rem, 82vw, 68rem);
   width: min(100%, 90rem);
   margin-inline: auto;
   isolation: isolate;
@@ -87,7 +125,7 @@
   width: clamp(15rem, 28vw, 25rem);
   aspect-ratio: 1;
   border-radius: 50%;
-  background: rgba(255, 167, 147, 0.62);
+  background: color-mix(in srgb, var(--accent-fill) 55%, transparent);
   filter: blur(4.25rem);
   pointer-events: none;
   will-change: transform;
@@ -110,7 +148,7 @@
   z-index: 1;
   width: 14.5rem;
   height: 2.8rem;
-  border: 1px solid var(--peach);
+  border: 1px solid var(--accent-line);
   border-radius: 999px;
   will-change: transform;
 }
@@ -120,7 +158,7 @@
   bottom: -1.6rem;
   left: 0.2rem;
   width: 1.8rem;
-  fill: var(--blush);
+  fill: var(--accent-fill);
 }
 
 .ribbon {
@@ -128,9 +166,8 @@
   z-index: 6;
   overflow: hidden;
   margin-block: clamp(1.5rem, 3vw, 2.5rem);
-  border-block: 1px solid rgba(36, 32, 30, 0.12);
+  border-block: 2px solid var(--ink);
   background: #fff;
-  transform: rotate(-2deg) scale(1.03);
 }
 
 .ribbonTrack {
@@ -143,18 +180,14 @@
   padding-block: 0.85rem;
   white-space: nowrap;
   color: var(--ink);
-  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
   font-size: 0.75rem;
+  font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
 }
 
 .ribbonReverse .ribbonTrack {
   animation-direction: reverse;
-}
-
-.ribbonReverse {
-  transform: rotate(2deg) scale(1.03);
 }
 
 @keyframes ribbonScroll {
@@ -165,7 +198,7 @@
 
 .heroImageWrap {
   position: absolute;
-  top: clamp(17rem, 26vw, 25rem);
+  top: clamp(24rem, 32vw, 33rem);
   left: 50%;
   z-index: 2;
   width: clamp(20rem, 62vw, 56rem);
@@ -193,28 +226,29 @@
   justify-content: flex-end;
   gap: 0.25rem;
   overflow: hidden;
-  border: 1px solid rgba(36, 32, 30, 0.48);
+  border: 1px solid rgba(26, 23, 18, 0.48);
+  border-radius: 1.5rem;
   padding: 1rem;
   background:
     linear-gradient(
       135deg,
       transparent 49.8%,
-      rgba(36, 32, 30, 0.28) 50%,
+      rgba(26, 23, 18, 0.28) 50%,
       transparent 50.2%
     ),
     linear-gradient(
       45deg,
       transparent 49.8%,
-      rgba(36, 32, 30, 0.28) 50%,
+      rgba(26, 23, 18, 0.28) 50%,
       transparent 50.2%
-    ), rgba(255, 204, 192, 0.32);
-  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+    ), color-mix(in srgb, var(--color-broom-300) 45%, transparent);
 }
 
 .artwork {
   position: relative;
   overflow: hidden;
-  background: rgba(255, 204, 192, 0.32);
+  border-radius: 1.5rem;
+  background: color-mix(in srgb, var(--color-broom-300) 45%, transparent);
 }
 
 .artwork img {
@@ -229,17 +263,16 @@
 }
 
 .imageSpace strong {
-  font-family: var(--font-display), Georgia, "Times New Roman", serif;
-  font-size: 1.15rem;
-  font-weight: 400;
+  font-size: 1.1rem;
+  font-weight: 700;
 }
 
 .heroCopy {
   position: absolute;
-  top: clamp(5.5rem, 11vw, 8.5rem);
+  top: clamp(4.5rem, 9vw, 7rem);
   left: 50%;
   z-index: 4;
-  width: min(92%, 60rem);
+  width: min(94%, 66rem);
   text-align: center;
   transform: translateX(-50%);
   will-change: transform;
@@ -248,7 +281,6 @@
 .heroCopy > p,
 .storyCopy > p,
 .collectionCopy > p {
-  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.16em;
@@ -257,38 +289,64 @@
 
 .hero h1 {
   margin-top: 1rem;
-  color: #3f3f3f;
-  font-size: clamp(3.5rem, 9vw, 8.5rem);
-  font-weight: 300;
-  line-height: 0.82;
-  letter-spacing: -0.065em;
+  color: var(--ink);
+  font-size: clamp(2.5rem, 6.5vw, 5.75rem);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
   text-transform: uppercase;
   text-wrap: balance;
 }
 
-.hero h1 em,
-.story h2 em {
-  font-weight: 300;
-  text-transform: lowercase;
+.heroHighlight {
+  padding-inline: 0.15em;
+  background-image: linear-gradient(
+    to top,
+    var(--accent-fill) 42%,
+    transparent 42%
+  );
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 
-.hero h1 em {
-  color: var(--coral);
+.heroSubcopy {
+  max-width: 34rem;
+  margin: 1.5rem auto 0;
+  font-size: 1.05rem;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.heroActions {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
 }
 
 .heroCta {
-  position: absolute;
-  bottom: 2.5rem;
-  left: max(1rem, calc(50% - 34rem));
+  position: relative;
   z-index: 5;
-  min-height: 3rem;
+  min-height: 3.25rem;
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  border-bottom: 1px solid currentColor;
-  font-size: clamp(1.25rem, 2.5vw, 2rem);
-  font-weight: 500;
+  gap: 0.6rem;
+  border-radius: 999px;
+  padding-inline: 1.75rem;
+  background: var(--ink);
+  color: #fff;
+  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+  font-weight: 700;
   text-decoration: none;
+  transition: transform 180ms ease-out;
+}
+
+.heroCta:hover {
+  transform: translateY(-2px);
 }
 
 .heroCta svg,
@@ -301,19 +359,20 @@
   transform: translateX(0.25rem);
 }
 
-.heroNote {
-  position: absolute;
-  right: max(1rem, calc(50% - 37rem));
-  bottom: 2.5rem;
-  max-width: 18rem;
-  font-size: 1rem;
-  line-height: 1.5;
+.heroCtaGhost {
+  min-height: 3.25rem;
+  display: inline-flex;
+  align-items: center;
+  border-bottom: 1.5px solid var(--ink);
+  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+  font-weight: 700;
+  text-decoration: none;
 }
 
 .heroSpark,
 .storySpark {
   position: absolute;
-  fill: var(--blush);
+  fill: var(--accent-text);
 }
 
 .heroSpark {
@@ -324,7 +383,7 @@
 
 .story {
   position: relative;
-  min-height: clamp(64rem, 120vw, 86rem);
+  min-height: clamp(68rem, 124vw, 92rem);
   width: min(100%, 90rem);
   margin-inline: auto;
   isolation: isolate;
@@ -339,7 +398,7 @@
   right: 5%;
   bottom: 13%;
   width: clamp(2.5rem, 5vw, 4.5rem);
-  fill: rgba(199, 101, 72, 0.46);
+  fill: color-mix(in srgb, var(--accent-text) 46%, transparent);
 }
 
 .storyMainImage,
@@ -363,28 +422,28 @@
   left: 28%;
   z-index: 3;
   width: min(23vw, 18rem);
-  box-shadow: 0 1.5rem 3rem rgba(91, 48, 35, 0.18);
+  box-shadow: 0 1.5rem 3rem rgba(26, 23, 18, 0.18);
 }
 
 .storyInsetImage :is(.imageSpace, .artwork) {
   aspect-ratio: 3 / 4;
-  background-color: #f1b5a5;
+  background-color: var(--color-broom-300);
 }
 
 .storyCopy {
   position: absolute;
-  top: 21%;
+  top: 15%;
   right: 4%;
   width: min(53%, 43rem);
 }
 
 .story h2 {
-  margin-block: 1.25rem 2rem;
-  color: #3f3f3f;
-  font-size: clamp(3.25rem, 7vw, 7rem);
-  font-weight: 300;
-  line-height: 0.92;
-  letter-spacing: -0.06em;
+  margin-block: 1.25rem 1.75rem;
+  color: var(--ink);
+  font-size: clamp(2.5rem, 5.5vw, 5rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
   text-wrap: balance;
 }
 
@@ -393,7 +452,6 @@
   display: block;
   max-width: 34rem;
   margin-bottom: 2rem;
-  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
   font-size: clamp(1rem, 1.5vw, 1.15rem);
   line-height: 1.7;
 }
@@ -404,7 +462,7 @@
   width: fit-content;
   align-items: center;
   gap: 0.6rem;
-  border-bottom: 1px solid rgba(36, 32, 30, 0.55);
+  border-bottom: 1px solid rgba(26, 23, 18, 0.55);
   text-decoration: none;
 }
 
@@ -412,33 +470,185 @@
   margin-top: 0.5rem;
 }
 
-.storyIndex {
+.philosophyGrid {
   margin-top: 3rem;
   display: grid;
-  gap: 0;
-  max-width: 30rem;
-  list-style: none;
-  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
-  font-size: 0.95rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  max-width: 34rem;
 }
 
-.storyIndex li {
+.philosophyCard {
   display: flex;
-  align-items: baseline;
-  gap: 1.1rem;
-  border-top: 1px solid rgba(36, 32, 30, 0.25);
-  padding-block: 0.9rem;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-.storyIndex li:last-child {
-  border-bottom: 1px solid rgba(36, 32, 30, 0.25);
+.philosophyIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: var(--accent-fill);
+  color: var(--ink);
 }
 
-.storyIndex li span {
-  color: var(--coral);
-  font-family: var(--font-display), Georgia, "Times New Roman", serif;
-  font-size: 1.4rem;
-  font-weight: 500;
+.philosophyCard span {
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+.process {
+  position: relative;
+  width: min(100% - 2rem, 76rem);
+  margin-inline: auto;
+  padding-block: clamp(3rem, 6vw, 5rem);
+}
+
+.process > p,
+.credentials > p,
+.projects > p {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.process h2,
+.projects h2 {
+  margin-block: 0.75rem 2.5rem;
+  max-width: 40rem;
+  color: var(--ink);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.processList {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.5rem, 4vw, 3rem);
+  list-style: none;
+}
+
+.processStep {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.processNumber {
+  display: inline-flex;
+  width: 3rem;
+  height: 3rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.processStep h3 {
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.processStep p {
+  max-width: 22rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.credentials {
+  position: relative;
+  width: min(100% - 2rem, 76rem);
+  margin-inline: auto;
+  padding-block: clamp(2rem, 4vw, 3rem);
+  border-block: 1px solid rgba(26, 23, 18, 0.2);
+}
+
+.credentialsRow {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.credentialPill {
+  border: 1px solid rgba(26, 23, 18, 0.3);
+  border-radius: 999px;
+  padding: 0.5rem 1.1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.projects {
+  position: relative;
+  width: min(100% - 2rem, 76rem);
+  margin-inline: auto;
+  padding-block: clamp(3rem, 6vw, 5rem);
+}
+
+.projectsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+.projectCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  border-radius: 1.75rem;
+  padding: 1.75rem;
+  background: var(--accent-soft);
+  text-decoration: none;
+  color: var(--ink);
+  transition: transform 180ms ease-out;
+}
+
+.projectCard:hover {
+  transform: translateY(-4px);
+}
+
+.projectBadge {
+  display: inline-flex;
+  width: 2.75rem;
+  height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--accent-fill-strong);
+}
+
+.projectCard h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.projectCard h3 svg {
+  width: 1rem;
+  transition: transform 180ms ease-out;
+}
+
+.projectCard:hover h3 svg {
+  transform: translate(0.2rem, -0.2rem);
+}
+
+.projectCard p {
+  font-size: 0.9rem;
+  line-height: 1.6;
 }
 
 .collection {
@@ -477,6 +687,7 @@
   width: 132%;
   color: #fff;
   font-size: clamp(2.25rem, 5vw, 5rem);
+  font-weight: 700;
   line-height: 1;
   letter-spacing: 0.02em;
   text-align: center;
@@ -491,11 +702,11 @@
 
 .collectionCopy h2 {
   margin-block: 0.75rem 1.5rem;
-  color: var(--coral);
-  font-size: clamp(2.5rem, 5vw, 5.25rem);
-  font-weight: 300;
-  line-height: 0.95;
-  letter-spacing: -0.055em;
+  color: var(--accent-text);
+  font-size: clamp(2.25rem, 4.5vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
 }
 
 .collectionArrow {
@@ -505,16 +716,16 @@
   height: 3.25rem;
   align-items: center;
   justify-content: center;
-  border: 1.5px solid var(--coral);
+  border: 1.5px solid var(--ink);
   border-radius: 50%;
-  color: var(--coral);
+  color: var(--ink);
   transition:
     background-color 180ms ease-out,
     color 180ms ease-out;
 }
 
 .collectionArrow:hover {
-  background-color: var(--coral);
+  background-color: var(--ink);
   color: #fff;
 }
 
@@ -537,7 +748,7 @@
 }
 
 .cards a:hover .imageSpace {
-  background-color: rgba(255, 167, 147, 0.68);
+  background-color: color-mix(in srgb, var(--accent-fill) 68%, transparent);
 }
 
 .cards a .artwork img {
@@ -551,8 +762,8 @@
 .cards a > span {
   display: block;
   margin-top: 0.9rem;
-  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
   font-size: 0.65rem;
+  font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -561,7 +772,14 @@
   display: block;
   margin-top: 0.25rem;
   font-size: clamp(1.05rem, 1.5vw, 1.35rem);
-  font-weight: 500;
+  font-weight: 700;
+}
+
+.ctaBandOuter {
+  position: relative;
+  width: 100%;
+  margin-top: clamp(2rem, 5vw, 4rem);
+  background: var(--accent-fill-strong);
 }
 
 .ctaBand {
@@ -574,8 +792,7 @@
 }
 
 .ctaGlow {
-  top: 8%;
-  right: 4%;
+  display: none;
 }
 
 .ctaSpark {
@@ -583,11 +800,11 @@
   top: 16%;
   left: 8%;
   width: clamp(2rem, 4vw, 3rem);
-  fill: var(--peach);
+  fill: var(--ink);
+  opacity: 0.35;
 }
 
 .ctaBand > p {
-  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.16em;
@@ -596,16 +813,12 @@
 
 .ctaBand h2 {
   margin-top: 1.25rem;
-  font-size: clamp(2.75rem, 6.5vw, 6rem);
-  font-weight: 300;
-  line-height: 0.95;
-  letter-spacing: -0.05em;
+  color: var(--ink);
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: -0.02em;
   text-wrap: balance;
-}
-
-.ctaBand h2 em {
-  color: var(--coral);
-  font-weight: 300;
 }
 
 .ctaLinks {
@@ -623,7 +836,7 @@
   gap: 0.6rem;
   border-bottom: 1px solid currentColor;
   font-size: clamp(1.15rem, 2vw, 1.6rem);
-  font-weight: 500;
+  font-weight: 700;
   text-decoration: none;
 }
 
@@ -643,21 +856,58 @@
   align-items: center;
   gap: 2rem;
   margin-inline: auto;
-  border-top: 1px solid rgba(36, 32, 30, 0.75);
-  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  border-top: 1px solid rgba(26, 23, 18, 0.75);
   font-size: 0.8rem;
 }
 
 .footer strong {
-  font-family: var(--font-display), Georgia, "Times New Roman", serif;
-  font-size: 1.25rem;
-  font-weight: 500;
+  font-size: 1.1rem;
+  font-weight: 800;
 }
 
 .footerLink {
   min-height: 2.75rem;
   display: inline-flex;
   align-items: center;
+}
+
+.footerSocial {
+  display: flex;
+  gap: 1.75rem;
+}
+
+.footerSocialGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.footerSocialGroup span {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.footerSocialGroup a {
+  display: inline-flex;
+  width: 2rem;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  transition: background-color 180ms ease-out;
+}
+
+.footerSocialGroup a:hover {
+  background-color: var(--accent-fill);
+}
+
+.footerSocialGroup img {
+  width: 1rem;
+  height: 1rem;
 }
 
 @media (max-width: 760px) {
@@ -673,11 +923,11 @@
   }
 
   .hero {
-    min-height: 36rem;
+    min-height: 54rem;
   }
 
   .heroImageWrap {
-    top: 16rem;
+    top: 29rem;
     width: 92vw;
   }
 
@@ -686,21 +936,15 @@
   }
 
   .hero h1 {
-    font-size: clamp(3.25rem, 17vw, 5.25rem);
+    font-size: clamp(3rem, 16vw, 5rem);
   }
 
-  .heroCta {
-    bottom: 3.5rem;
-    left: 1rem;
-  }
-
-  .heroNote,
   .heroPill {
     display: none;
   }
 
   .story {
-    min-height: 90rem;
+    min-height: 98rem;
   }
 
   .storyMainImage {
@@ -723,7 +967,16 @@
   }
 
   .story h2 {
-    font-size: clamp(3.2rem, 15vw, 5rem);
+    font-size: clamp(2.75rem, 13vw, 4.25rem);
+  }
+
+  .philosophyGrid {
+    max-width: none;
+  }
+
+  .processList,
+  .projectsGrid {
+    grid-template-columns: 1fr;
   }
 
   .collection {
@@ -755,16 +1008,19 @@
   }
 
   .footer {
-    min-height: 12rem;
-    grid-template-columns: 1fr auto;
-  }
-
-  .footer p {
-    grid-row: 2;
+    min-height: auto;
+    grid-template-columns: 1fr;
+    justify-items: start;
+    gap: 1.25rem;
+    padding-block: 2rem;
   }
 }
 
 @media (max-width: 430px) {
+  .philosophyGrid {
+    grid-template-columns: 1fr;
+  }
+
   .cards {
     grid-template-columns: 1fr;
   }
@@ -781,6 +1037,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .siteHeader nav a,
+  .heroCta,
   .heroCta svg,
   .storyLink svg,
   .cards .imageSpace,

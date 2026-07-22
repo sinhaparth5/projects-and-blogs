@@ -1,19 +1,18 @@
 import fs from "node:fs";
 import path from "node:path";
-import { ArrowRight } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  BrainCircuit,
+  Cpu,
+  NotebookPen,
+} from "lucide-react";
 import type { Metadata } from "next";
-import { Cormorant } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import ParallaxController from "@/components/home/ParallaxController";
 import { absoluteUrl, siteDescription, siteName } from "@/lib/seo";
 import styles from "./page.module.css";
-
-const cormorant = Cormorant({
-  subsets: ["latin"],
-  style: ["normal", "italic"],
-  variable: "--font-display",
-});
 
 export const metadata: Metadata = {
   title: "Projects, Engineering & Research",
@@ -152,11 +151,7 @@ export default function Home() {
   };
 
   return (
-    <main
-      id="main-content"
-      className={`${styles.page} ${cormorant.variable}`}
-      tabIndex={-1}
-    >
+    <main id="main-content" className={styles.page} tabIndex={-1}>
       <ParallaxController />
       <script
         type="application/ld+json"
@@ -172,6 +167,7 @@ export default function Home() {
           href="/"
           aria-label="Projects and Blogs home"
         >
+          <Spark aria-hidden="true" />
           P&B
         </Link>
         <nav aria-label="Primary navigation">
@@ -196,6 +192,26 @@ export default function Home() {
         >
           <Leaf />
         </div>
+        <div className={styles.heroCopy} data-parallax data-speed="0.025">
+          <p>Two engineers · one archive</p>
+          <h1 id="hero-title">
+            We build <span className={styles.heroHighlight}>systems</span>.
+            <br />
+            We train <span className={styles.heroHighlight}>models</span>.
+          </h1>
+          <p className={styles.heroSubcopy}>
+            Two engineers writing down what the hardware and the models actually
+            do.
+          </p>
+          <div className={styles.heroActions}>
+            <Link className={styles.heroCta} href="#explore">
+              Explore the archive <ArrowRight aria-hidden="true" size={20} />
+            </Link>
+            <Link className={styles.heroCtaGhost} href="/pb/blogs/">
+              Read the notes
+            </Link>
+          </div>
+        </div>
         <div className={styles.heroImageWrap} data-parallax data-speed="-0.045">
           <Artwork
             file="hero-doodles.png"
@@ -205,19 +221,6 @@ export default function Home() {
             priority
           />
         </div>
-        <div className={styles.heroCopy} data-parallax data-speed="0.025">
-          <p>Independent work · thoughtful writing</p>
-          <h1 id="hero-title">
-            Ideas have a <em>new</em> address
-          </h1>
-        </div>
-        <Link className={styles.heroCta} href="#explore">
-          Explore now <ArrowRight aria-hidden="true" size={20} />
-        </Link>
-        <p className={styles.heroNote}>
-          Two engineers writing down what the hardware and the models actually
-          do.
-        </p>
       </section>
 
       <Ribbon />
@@ -252,14 +255,12 @@ export default function Home() {
           />
         </div>
         <div className={styles.storyCopy}>
-          <p>Two perspectives, one home</p>
-          <h2 id="story-title">
-            We make the complex feel <em>untamable</em>
-          </h2>
+          <p>Our philosophy</p>
+          <h2 id="story-title">We make the complex feel legible.</h2>
           <span>
-            Parth works close to the metal — GPU architecture and systems.
-            Shine works close to the data — AI, machine learning, and quant
-            research. Together, this is a living archive of both.
+            Parth works close to the metal — GPU architecture and systems. Shine
+            works close to the data — AI, machine learning, and quant research.
+            Together, this is a living archive of both.
           </span>
           <Link className={styles.storyLink} href="/parth/">
             Meet Parth <ArrowRight aria-hidden="true" size={19} />
@@ -267,17 +268,80 @@ export default function Home() {
           <Link className={styles.storyLink} href="/shine/">
             Meet Shine <ArrowRight aria-hidden="true" size={19} />
           </Link>
-          <ol className={styles.storyIndex}>
-            <li>
-              <span>01</span>GPU architecture, compilers & systems
-            </li>
-            <li>
-              <span>02</span>AI, machine learning & quantitative research
-            </li>
-            <li>
-              <span>03</span>Field notes published as essays
-            </li>
-          </ol>
+          <div className={styles.philosophyGrid}>
+            <div className={styles.philosophyCard}>
+              <span className={styles.philosophyIcon}>
+                <Cpu aria-hidden="true" size={20} />
+              </span>
+              <span>GPU architecture, compilers & systems</span>
+            </div>
+            <div className={styles.philosophyCard}>
+              <span className={styles.philosophyIcon}>
+                <BrainCircuit aria-hidden="true" size={20} />
+              </span>
+              <span>AI, machine learning & quantitative research</span>
+            </div>
+            <div className={styles.philosophyCard}>
+              <span className={styles.philosophyIcon}>
+                <NotebookPen aria-hidden="true" size={20} />
+              </span>
+              <span>Field notes published as essays</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.process} aria-labelledby="process-title">
+        <p>How we work</p>
+        <h2 id="process-title">From question to published note.</h2>
+        <ol className={styles.processList}>
+          <li className={styles.processStep}>
+            <span className={styles.processNumber}>01</span>
+            <div>
+              <h3>Explore</h3>
+              <p>
+                We start at the hardware and the model — profiling GPUs, reading
+                papers, running the numbers ourselves.
+              </p>
+            </div>
+          </li>
+          <li className={styles.processStep}>
+            <span className={styles.processNumber}>02</span>
+            <div>
+              <h3>Build</h3>
+              <p>
+                We ship the system: compilers, agents, pipelines, production
+                code that has to hold up.
+              </p>
+            </div>
+          </li>
+          <li className={styles.processStep}>
+            <span className={styles.processNumber}>03</span>
+            <div>
+              <h3>Publish</h3>
+              <p>
+                Every real finding becomes a written note — the archive is the
+                paper trail.
+              </p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <section
+        className={styles.credentials}
+        aria-label="Companies we've built for"
+      >
+        <p>Built inside</p>
+        <div className={styles.credentialsRow}>
+          <span className={styles.credentialPill}>Motion</span>
+          <span className={styles.credentialPill}>Film.io</span>
+          <span className={styles.credentialPill}>Parabol</span>
+          <span className={styles.credentialPill}>Clevertech</span>
+          <span className={styles.credentialPill}>Gnani.ai</span>
+          <span className={styles.credentialPill}>Valura.ai</span>
+          <span className={styles.credentialPill}>Turing</span>
+          <span className={styles.credentialPill}>DRDO</span>
         </div>
       </section>
 
@@ -297,7 +361,7 @@ export default function Home() {
             label="Work feature"
             size="1400 × 2100 px · 2:3"
           />
-          <p aria-hidden="true">NEW IN TOWN · NEW IN TOWN ·</p>
+          <p aria-hidden="true">LATEST WORK · LATEST WORK ·</p>
         </div>
         <div className={styles.collectionCopy}>
           <p>Selected destinations</p>
@@ -345,28 +409,152 @@ export default function Home() {
         </div>
       </section>
 
-      <Ribbon reverse />
-
-      <section className={styles.ctaBand} aria-labelledby="cta-title">
-        <div className={styles.ctaGlow} data-parallax data-speed="0.06" />
-        <Spark className={styles.ctaSpark} data-parallax data-speed="-0.04" />
-        <p>Straight from the studio</p>
-        <h2 id="cta-title">
-          Come for the code, stay for the <em>notes</em>
-        </h2>
-        <div className={styles.ctaLinks}>
-          <Link className={styles.ctaLink} href="/pb/blogs/">
-            Notes by Parth <ArrowRight aria-hidden="true" size={20} />
-          </Link>
-          <Link className={styles.ctaLink} href="/sb/blogs/">
-            Notes by Shine <ArrowRight aria-hidden="true" size={20} />
-          </Link>
+      <section className={styles.projects} aria-labelledby="projects-title">
+        <p>Open source & side projects</p>
+        <h2 id="projects-title">Things we've shipped outside of work.</h2>
+        <div className={styles.projectsGrid}>
+          <a
+            className={styles.projectCard}
+            href="https://monito.dev/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span className={styles.projectBadge}>
+              <Cpu aria-hidden="true" size={18} />
+            </span>
+            <h3>
+              Monito <ArrowUpRight aria-hidden="true" size={16} />
+            </h3>
+            <p>
+              Browser extension for debugging web apps — screenshots, screen
+              recording, E2E test generation, and bug reports.
+            </p>
+          </a>
+          <a
+            className={styles.projectCard}
+            href="https://chatverse.io/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span className={styles.projectBadge}>
+              <BrainCircuit aria-hidden="true" size={18} />
+            </span>
+            <h3>
+              Chatverse.io <ArrowUpRight aria-hidden="true" size={16} />
+            </h3>
+            <p>
+              An AI no-code automation platform that turns plain English into
+              real actions across 15+ tools. 500+ beta users.
+            </p>
+          </a>
+          <a
+            className={styles.projectCard}
+            href="https://github.com/BartoszJarocki/cv"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span className={styles.projectBadge}>
+              <NotebookPen aria-hidden="true" size={18} />
+            </span>
+            <h3>
+              Minimalist CV <ArrowUpRight aria-hidden="true" size={16} />
+            </h3>
+            <p>
+              An open source, print-friendly CV template focused on readability.
+              9k+ stars on GitHub.
+            </p>
+          </a>
         </div>
       </section>
 
+      <Ribbon reverse />
+
+      <div className={styles.ctaBandOuter}>
+        <section className={styles.ctaBand} aria-labelledby="cta-title">
+          <Spark className={styles.ctaSpark} data-parallax data-speed="-0.04" />
+          <p>Straight from the notebook</p>
+          <h2 id="cta-title">Come for the code, stay for the notes.</h2>
+          <div className={styles.ctaLinks}>
+            <Link className={styles.ctaLink} href="/pb/blogs/">
+              Notes by Parth <ArrowRight aria-hidden="true" size={20} />
+            </Link>
+            <Link className={styles.ctaLink} href="/sb/blogs/">
+              Notes by Shine <ArrowRight aria-hidden="true" size={20} />
+            </Link>
+          </div>
+        </section>
+      </div>
+
       <footer className={styles.footer}>
-        <strong>Projects & Blogs</strong>
-        <p>Made with care in London.</p>
+        <div>
+          <strong>Projects & Blogs</strong>
+        </div>
+        <div className={styles.footerSocial}>
+          <div className={styles.footerSocialGroup}>
+            <span>Parth</span>
+            <a
+              href="https://github.com/sinhaparth5"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Parth's GitHub profile"
+            >
+              <Image src="/cv/icons/github.png" alt="" width={16} height={16} />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/parth-sinha18/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Parth's LinkedIn profile"
+            >
+              <Image
+                src="/cv/icons/linkedin.png"
+                alt=""
+                width={16}
+                height={16}
+              />
+            </a>
+            <a
+              href="https://x.com/sinhaparth555"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Parth's X profile"
+            >
+              <Image src="/cv/icons/x.svg" alt="" width={16} height={16} />
+            </a>
+          </div>
+          <div className={styles.footerSocialGroup}>
+            <span>Shine</span>
+            <a
+              href="https://github.com/Shine-5705"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Shine's GitHub profile"
+            >
+              <Image src="/cv/icons/github.png" alt="" width={16} height={16} />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/shine-gupta-62b22b264"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Shine's LinkedIn profile"
+            >
+              <Image
+                src="/cv/icons/linkedin.png"
+                alt=""
+                width={16}
+                height={16}
+              />
+            </a>
+            <a
+              href="https://x.com/shine_gupta17"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Shine's X profile"
+            >
+              <Image src="/cv/icons/x.svg" alt="" width={16} height={16} />
+            </a>
+          </div>
+        </div>
         <Link className={styles.footerLink} href="/admin/login/">
           Admin
         </Link>
