@@ -10,6 +10,7 @@ export interface WorkExperience {
   url: string;
   position: string;
   period: string;
+  location?: string;
   description: string;
   details?: string[];
   tags: string[];
@@ -21,6 +22,32 @@ export interface SideProject {
   description: string;
   technologies: string[];
   active?: boolean;
+}
+
+export interface Education {
+  institution: string;
+  period: string;
+  degree: string;
+}
+
+export interface Publication {
+  title: string;
+  authors: string;
+  venue: string;
+  period: string;
+  status: string;
+}
+
+export interface Hackathon {
+  title: string;
+  result: string;
+  period: string;
+  location: string;
+  project: string;
+  description: string;
+  highlights?: string[];
+  linkedin: string;
+  tags: string[];
 }
 
 export interface ResumeData {
@@ -35,5 +62,9 @@ export interface ResumeData {
   contactLinks: ContactLink[];
   workExperience: WorkExperience[];
   skills: string[];
+  skillCategories?: Record<string, string[]>;
   sideProjects: SideProject[];
+  education?: Education[];
+  publications?: Publication[];
+  hackathons?: Hackathon[];
 }

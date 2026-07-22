@@ -14,7 +14,7 @@ export const parth: ResumeData = {
   contactLinks: [
     {
       label: "Personal website",
-      href: "https://parthsinha.com",
+      href: "https://wepyxis.space/parth",
       icon: "/cv/icons/browser.png",
       external: true,
     },

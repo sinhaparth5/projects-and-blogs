@@ -1,8 +1,4 @@
-export const siteUrl = new URL(
-  process.env.APP_BASE_URL?.replace(/\/$/, "") ||
-    process.env.SITE_URL?.replace(/\/$/, "") ||
-    "https://parthsinha.com",
-);
+export const siteUrl = new URL("https://wepyxis.space");
 
 export const siteName = "Parth & Shine — Projects & Blogs";
 export const siteDescription =

@@ -75,7 +75,7 @@ export function createSocialImage({
           color: "#71717a",
         }}
       >
-        <span>parthsinha.com</span>
+        <span>wepyxis.space</span>
         <span>Projects · Engineering · Design</span>
       </div>
     </div>,
