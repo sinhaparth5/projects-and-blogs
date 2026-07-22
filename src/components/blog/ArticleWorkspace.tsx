@@ -46,6 +46,19 @@ export default function ArticleWorkspace({
   }, [storageKey]);
 
   useEffect(() => {
+    if (headings.length === 0) return;
+    function syncFromHash() {
+      const id = window.location.hash.slice(1);
+      if (id && headings.some((heading) => heading.id === id)) {
+        setActiveHeading(id);
+      }
+    }
+    syncFromHash();
+    window.addEventListener("hashchange", syncFromHash);
+    return () => window.removeEventListener("hashchange", syncFromHash);
+  }, [headings]);
+
+  useEffect(() => {
     const root = article.current;
     if (!root || headings.length === 0) return;
     const observer = new IntersectionObserver(
@@ -127,11 +140,12 @@ export default function ArticleWorkspace({
                     aria-current={
                       activeHeading === heading.id ? "location" : undefined
                     }
-                    onClick={(event) =>
+                    onClick={(event) => {
+                      setActiveHeading(heading.id);
                       event.currentTarget
                         .closest("details")
-                        ?.removeAttribute("open")
-                    }
+                        ?.removeAttribute("open");
+                    }}
                   >
                     {heading.text}
                   </a>
@@ -157,6 +171,7 @@ export default function ArticleWorkspace({
                       aria-current={
                         activeHeading === heading.id ? "location" : undefined
                       }
+                      onClick={() => setActiveHeading(heading.id)}
                     >
                       {heading.text}
                     </a>

@@ -15,8 +15,9 @@ Uses pnpm (not npm — `package-lock.json` was removed).
 - `pnpm db:seed` — idempotently seed the two authors and four starter articles
 - `pnpm lint` — Biome check (lint + format verification)
 - `pnpm format` — Biome format, writes changes
-
-There is no test suite.
+- `pnpm test` — run all `*.test.ts` files under `src/` with Node's built-in test runner (via `tsx`)
+- `pnpm test:html` — run only `src/lib/articles/html-pipeline.test.ts` (sanitize + render-transform round-trip coverage)
+- `node --import tsx --test path/to/file.test.ts` — run a single test file directly
 
 Docker runs the standalone Next.js server as the unprivileged `node` user on port 8080:
 
@@ -25,7 +26,7 @@ docker build -t projects-and-blogs .
 docker run --rm -p 8080:8080 --env-file .env projects-and-blogs
 ```
 
-Run `prisma migrate deploy` outside the application container before deploying a schema change.
+Run `prisma migrate deploy` outside the application container before deploying a schema change. In CI (`.github/workflows/deploy-production.yml`), pushes to `master` decode a base64 production env secret, run `prisma migrate deploy` against it, then build/push the Docker image to GHCR and deploy it over SSH to the VPS.
 
 ## Environment
 
