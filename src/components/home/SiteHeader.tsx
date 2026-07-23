@@ -1,6 +1,5 @@
 "use client";
 
-import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import styles from "@/app/page.module.css";
@@ -10,6 +9,19 @@ function Spark(props: React.SVGProps<SVGSVGElement>) {
     <svg viewBox="0 0 66 99" aria-hidden="true" focusable="false" {...props}>
       <path d="M66 49.5C54 45.96 39 24.75 33 0 27 24.75 15 44.79 0 49.5 18 56.57 25 82.5 33 99 39 84.86 48 56.57 66 49.5Z" />
     </svg>
+  );
+}
+
+function Burger({ open }: { open: boolean }) {
+  return (
+    <span
+      className={`${styles.burger} ${open ? styles.burgerOpen : ""}`}
+      aria-hidden="true"
+    >
+      <span className={styles.burgerBar} />
+      <span className={styles.burgerBar} />
+      <span className={styles.burgerBar} />
+    </span>
   );
 }
 
@@ -72,11 +84,7 @@ export default function SiteHeader() {
         aria-label={open ? "Close menu" : "Open menu"}
         onClick={() => setOpen((value) => !value)}
       >
-        {open ? (
-          <X aria-hidden="true" size={20} />
-        ) : (
-          <Menu aria-hidden="true" size={20} />
-        )}
+        <Burger open={open} />
       </button>
 
       {open && (
