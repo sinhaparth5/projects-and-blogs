@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "nextra-theme-blog/style.css";
 import "katex/dist/katex.min.css";
 import "./globals.css";
+import CookieConsent from "@/components/consent/CookieConsent";
+import GoogleTag from "@/components/consent/GoogleTag";
 import { siteDescription, siteName, siteUrl } from "@/lib/seo";
 
 const inter = Inter({
@@ -73,7 +75,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.variable} suppressHydrationWarning>
-      <body>{children}</body>
+      <body>
+        {children}
+        <CookieConsent />
+        <GoogleTag />
+      </body>
     </html>
   );
 }

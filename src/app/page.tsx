@@ -178,8 +178,12 @@ export default function Home() {
           <Link className={styles.activeLink} href="/">
             Home
           </Link>
-          <Link href="/parth/">Parth</Link>
-          <Link href="/shine/">Shine</Link>
+          <Link href="/parth/" prefetch={false}>
+            Parth
+          </Link>
+          <Link href="/shine/" prefetch={false}>
+            Shine
+          </Link>
           <Link href="/pb/blogs/">Writing</Link>
         </nav>
       </header>
@@ -284,10 +288,10 @@ export default function Home() {
             works close to the data — AI, machine learning, and quant research.
             Together, this is a living archive of both.
           </span>
-          <Link className={styles.storyLink} href="/parth/">
+          <Link className={styles.storyLink} href="/parth/" prefetch={false}>
             Meet Parth <ArrowRight aria-hidden="true" size={19} />
           </Link>
-          <Link className={styles.storyLink} href="/shine/">
+          <Link className={styles.storyLink} href="/shine/" prefetch={false}>
             Meet Shine <ArrowRight aria-hidden="true" size={19} />
           </Link>
           <div className={styles.philosophyGrid}>
@@ -425,7 +429,7 @@ export default function Home() {
           </Link>
         </div>
         <div className={styles.cards}>
-          <Link className={styles.cardLink} href="/parth/">
+          <Link className={styles.cardLink} href="/parth/" prefetch={false}>
             <Artwork
               file="card-parth.png"
               label="Parth portrait"
@@ -437,7 +441,7 @@ export default function Home() {
               Full-stack &amp; systems, 15 years
             </em>
           </Link>
-          <Link className={styles.cardLink} href="/shine/">
+          <Link className={styles.cardLink} href="/shine/" prefetch={false}>
             <Artwork
               file="card-shine.png"
               label="Shine portrait"
