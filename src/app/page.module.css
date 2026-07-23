@@ -328,6 +328,39 @@
   gap: 1.5rem;
 }
 
+.heroStats {
+  position: relative;
+  z-index: 5;
+  margin-top: 2.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+.heroStat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  text-align: center;
+}
+
+.heroStat strong {
+  color: var(--ink);
+  font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.heroStat span {
+  max-width: 8rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  opacity: 0.68;
+}
+
 .heroCta {
   position: relative;
   z-index: 5;
@@ -383,7 +416,7 @@
 
 .story {
   position: relative;
-  min-height: clamp(68rem, 124vw, 92rem);
+  min-height: clamp(48rem, 84vw, 62rem);
   width: min(100%, 90rem);
   margin-inline: auto;
   isolation: isolate;
@@ -473,8 +506,8 @@
 .philosophyGrid {
   margin-top: 3rem;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem 1rem;
   max-width: 34rem;
 }
 
@@ -566,12 +599,49 @@
   line-height: 1.6;
 }
 
+.processOutcomes {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.5rem, 4vw, 3rem);
+  border-top: 1px solid rgba(26, 23, 18, 0.2);
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.processOutcome {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.processOutcome strong {
+  color: var(--accent-text);
+  font-size: clamp(1.5rem, 2.8vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.processOutcome span {
+  max-width: 18rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  opacity: 0.75;
+}
+
 .credentials {
   position: relative;
   width: min(100% - 2rem, 76rem);
   margin-inline: auto;
   padding-block: clamp(2rem, 4vw, 3rem);
   border-block: 1px solid rgba(26, 23, 18, 0.2);
+}
+
+.credentialsLead {
+  margin-top: 0.75rem;
+  max-width: 34rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  opacity: 0.8;
 }
 
 .credentialsRow {
@@ -775,6 +845,15 @@
   font-weight: 700;
 }
 
+.cardRole {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.75rem;
+  font-style: normal;
+  line-height: 1.4;
+  opacity: 0.65;
+}
+
 .ctaBandOuter {
   position: relative;
   width: 100%;
@@ -944,7 +1023,7 @@
   }
 
   .story {
-    min-height: 98rem;
+    min-height: 90rem;
   }
 
   .storyMainImage {
@@ -975,8 +1054,13 @@
   }
 
   .processList,
-  .projectsGrid {
+  .projectsGrid,
+  .processOutcomes {
     grid-template-columns: 1fr;
+  }
+
+  .heroStats {
+    gap: 1.5rem 2rem;
   }
 
   .collection {

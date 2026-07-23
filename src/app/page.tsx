@@ -5,7 +5,11 @@ import {
   ArrowUpRight,
   BrainCircuit,
   Cpu,
+  HeartPulse,
   NotebookPen,
+  ShieldAlert,
+  Trophy,
+  Video,
 } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
@@ -211,6 +215,24 @@ export default function Home() {
               Read the notes
             </Link>
           </div>
+          <div className={styles.heroStats} aria-label="Quick facts">
+            <div className={styles.heroStat}>
+              <strong>15+</strong>
+              <span>years engineering</span>
+            </div>
+            <div className={styles.heroStat}>
+              <strong>9+</strong>
+              <span>hackathons won</span>
+            </div>
+            <div className={styles.heroStat}>
+              <strong>3</strong>
+              <span>papers at ICML 2026</span>
+            </div>
+            <div className={styles.heroStat}>
+              <strong>500+</strong>
+              <span>users on shipped products</span>
+            </div>
+          </div>
         </div>
         <div className={styles.heroImageWrap} data-parallax data-speed="-0.045">
           <Artwork
@@ -287,6 +309,12 @@ export default function Home() {
               </span>
               <span>Field notes published as essays</span>
             </div>
+            <div className={styles.philosophyCard}>
+              <span className={styles.philosophyIcon}>
+                <Trophy aria-hidden="true" size={20} />
+              </span>
+              <span>9+ hackathon wins, 3 papers accepted at ICML 2026</span>
+            </div>
           </div>
         </div>
       </section>
@@ -326,6 +354,20 @@ export default function Home() {
             </div>
           </li>
         </ol>
+        <div className={styles.processOutcomes}>
+          <div className={styles.processOutcome}>
+            <strong>3 apps</strong>
+            <span>shipped in 8 weeks at Gnani.ai</span>
+          </div>
+          <div className={styles.processOutcome}>
+            <strong>50,000+</strong>
+            <span>documents processed into a RAG pipeline at DRDO</span>
+          </div>
+          <div className={styles.processOutcome}>
+            <strong>35%</strong>
+            <span>lift in multi-turn LLM quality at Turing</span>
+          </div>
+        </div>
       </section>
 
       <section
@@ -333,6 +375,10 @@ export default function Home() {
         aria-label="Companies we've built for"
       >
         <p>Built inside</p>
+        <p className={styles.credentialsLead}>
+          Eight product and research teams — from LTE base stations at Nokia
+          Siemens to enterprise AI agents at Motion and Valura.ai.
+        </p>
         <div className={styles.credentialsRow}>
           <span className={styles.credentialPill}>Motion</span>
           <span className={styles.credentialPill}>Film.io</span>
@@ -387,6 +433,9 @@ export default function Home() {
             />
             <span>01 · Résumé</span>
             <strong>Parth Sinha</strong>
+            <em className={styles.cardRole}>
+              Full-stack &amp; systems, 15 years
+            </em>
           </Link>
           <Link className={styles.cardLink} href="/shine/">
             <Artwork
@@ -396,6 +445,9 @@ export default function Home() {
             />
             <span>02 · Résumé</span>
             <strong>Shine</strong>
+            <em className={styles.cardRole}>
+              AI engineer, 9+ hackathon wins
+            </em>
           </Link>
           <Link className={styles.cardLink} href="/pb/blogs/">
             <Artwork
@@ -405,6 +457,7 @@ export default function Home() {
             />
             <span>03 · Journal</span>
             <strong>Latest writing</strong>
+            <em className={styles.cardRole}>Notes from both engineers</em>
           </Link>
         </div>
       </section>
@@ -432,6 +485,23 @@ export default function Home() {
           </a>
           <a
             className={styles.projectCard}
+            href="https://consultly.com/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span className={styles.projectBadge}>
+              <Video aria-hidden="true" size={18} />
+            </span>
+            <h3>
+              Consultly <ArrowUpRight aria-hidden="true" size={16} />
+            </h3>
+            <p>
+              A platform for online consultations with real-time video meetings
+              and scheduling, built on WebRTC.
+            </p>
+          </a>
+          <a
+            className={styles.projectCard}
             href="https://chatverse.io/"
             target="_blank"
             rel="noreferrer"
@@ -449,6 +519,23 @@ export default function Home() {
           </a>
           <a
             className={styles.projectCard}
+            href="https://github.com/Shine-5705/CareMate-AI-Powered-Chronic-Disease-Monitoring-Remote-Care"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span className={styles.projectBadge}>
+              <HeartPulse aria-hidden="true" size={18} />
+            </span>
+            <h3>
+              CareMate <ArrowUpRight aria-hidden="true" size={16} />
+            </h3>
+            <p>
+              A multilingual, LLM-powered healthcare assistant with RAG-based
+              clinical reasoning and symptom triage.
+            </p>
+          </a>
+          <a
+            className={styles.projectCard}
             href="https://github.com/BartoszJarocki/cv"
             target="_blank"
             rel="noreferrer"
@@ -462,6 +549,23 @@ export default function Home() {
             <p>
               An open source, print-friendly CV template focused on readability.
               9k+ stars on GitHub.
+            </p>
+          </a>
+          <a
+            className={styles.projectCard}
+            href="https://github.com/dorkydhruv/Cyber-Rakshak"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span className={styles.projectBadge}>
+              <ShieldAlert aria-hidden="true" size={18} />
+            </span>
+            <h3>
+              CyberRakshak <ArrowUpRight aria-hidden="true" size={16} />
+            </h3>
+            <p>
+              An AI cybercrime prediction system with 82% accuracy and
+              real-time risk scoring. Winner, Innotech 2023.
             </p>
           </a>
         </div>
