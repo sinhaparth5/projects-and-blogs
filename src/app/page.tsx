@@ -15,13 +15,14 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import ParallaxController from "@/components/home/ParallaxController";
+import SiteHeader from "@/components/home/SiteHeader";
 import { absoluteUrl, siteDescription, siteName } from "@/lib/seo";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "Projects, Engineering & Research",
   description:
-    "Two engineers, one archive: Parth Sinha on GPU architecture and systems, Shine on AI, machine learning, and quantitative research.",
+    "Two engineers, one archive: Shine Gupta on AI, machine learning, and quantitative research, Parth Sinha on GPU architecture and systems.",
   alternates: { canonical: "/" },
 };
 
@@ -128,6 +129,18 @@ export default function Home() {
       },
       {
         "@type": "Person",
+        "@id": `${absoluteUrl("/shine/")}#person`,
+        name: "Shine Gupta",
+        url: absoluteUrl("/shine/"),
+        jobTitle: "Engineer",
+        knowsAbout: [
+          "artificial intelligence",
+          "machine learning",
+          "quantitative research",
+        ],
+      },
+      {
+        "@type": "Person",
         "@id": `${absoluteUrl("/parth/")}#person`,
         name: "Parth Sinha",
         url: absoluteUrl("/parth/"),
@@ -137,18 +150,6 @@ export default function Home() {
           "https://github.com/sinhaparth5",
           "https://www.linkedin.com/in/parth-sinha18/",
           "https://x.com/sinhaparth555",
-        ],
-      },
-      {
-        "@type": "Person",
-        "@id": `${absoluteUrl("/shine/")}#person`,
-        name: "Shine",
-        url: absoluteUrl("/shine/"),
-        jobTitle: "Engineer",
-        knowsAbout: [
-          "artificial intelligence",
-          "machine learning",
-          "quantitative research",
         ],
       },
     ],
@@ -165,28 +166,7 @@ export default function Home() {
         }}
       />
 
-      <header className={styles.siteHeader}>
-        <Link
-          className={styles.brand}
-          href="/"
-          aria-label="Projects and Blogs home"
-        >
-          <Spark aria-hidden="true" />
-          P&B
-        </Link>
-        <nav aria-label="Primary navigation">
-          <Link className={styles.activeLink} href="/">
-            Home
-          </Link>
-          <Link href="/parth/" prefetch={false}>
-            Parth
-          </Link>
-          <Link href="/shine/" prefetch={false}>
-            Shine
-          </Link>
-          <Link href="/pb/blogs/">Writing</Link>
-        </nav>
-      </header>
+      <SiteHeader />
 
       <section className={styles.hero} aria-labelledby="hero-title">
         <div className={styles.heroGlow} data-parallax data-speed="0.06" />
@@ -284,15 +264,15 @@ export default function Home() {
           <p>Our philosophy</p>
           <h2 id="story-title">We make the complex feel legible.</h2>
           <span>
-            Parth works close to the metal — GPU architecture and systems. Shine
-            works close to the data — AI, machine learning, and quant research.
-            Together, this is a living archive of both.
+            Shine works close to the data — AI, machine learning, and quant
+            research. Parth works close to the metal — GPU architecture and
+            systems. Together, this is a living archive of both.
           </span>
-          <Link className={styles.storyLink} href="/parth/" prefetch={false}>
-            Meet Parth <ArrowRight aria-hidden="true" size={19} />
-          </Link>
           <Link className={styles.storyLink} href="/shine/" prefetch={false}>
             Meet Shine <ArrowRight aria-hidden="true" size={19} />
+          </Link>
+          <Link className={styles.storyLink} href="/parth/" prefetch={false}>
+            Meet Parth <ArrowRight aria-hidden="true" size={19} />
           </Link>
           <div className={styles.philosophyGrid}>
             <div className={styles.philosophyCard}>
@@ -429,28 +409,28 @@ export default function Home() {
           </Link>
         </div>
         <div className={styles.cards}>
-          <Link className={styles.cardLink} href="/parth/" prefetch={false}>
-            <Artwork
-              file="card-parth.png"
-              label="Parth portrait"
-              size="800 × 1200 px · 2:3"
-            />
-            <span>01 · Résumé</span>
-            <strong>Parth Sinha</strong>
-            <em className={styles.cardRole}>
-              Full-stack &amp; systems, 15 years
-            </em>
-          </Link>
           <Link className={styles.cardLink} href="/shine/" prefetch={false}>
             <Artwork
               file="card-shine.png"
               label="Shine portrait"
               size="800 × 1200 px · 2:3"
             />
-            <span>02 · Résumé</span>
-            <strong>Shine</strong>
+            <span>01 · Résumé</span>
+            <strong>Shine Gupta</strong>
             <em className={styles.cardRole}>
               AI engineer, 9+ hackathon wins
+            </em>
+          </Link>
+          <Link className={styles.cardLink} href="/parth/" prefetch={false}>
+            <Artwork
+              file="card-parth.png"
+              label="Parth portrait"
+              size="800 × 1200 px · 2:3"
+            />
+            <span>02 · Résumé</span>
+            <strong>Parth Sinha</strong>
+            <em className={styles.cardRole}>
+              Full-stack &amp; systems, 15 years
             </em>
           </Link>
           <Link className={styles.cardLink} href="/pb/blogs/">
@@ -583,11 +563,11 @@ export default function Home() {
           <p>Straight from the notebook</p>
           <h2 id="cta-title">Come for the code, stay for the notes.</h2>
           <div className={styles.ctaLinks}>
-            <Link className={styles.ctaLink} href="/pb/blogs/">
-              Notes by Parth <ArrowRight aria-hidden="true" size={20} />
-            </Link>
             <Link className={styles.ctaLink} href="/sb/blogs/">
               Notes by Shine <ArrowRight aria-hidden="true" size={20} />
+            </Link>
+            <Link className={styles.ctaLink} href="/pb/blogs/">
+              Notes by Parth <ArrowRight aria-hidden="true" size={20} />
             </Link>
           </div>
         </section>
@@ -598,38 +578,6 @@ export default function Home() {
           <strong>Projects & Blogs</strong>
         </div>
         <div className={styles.footerSocial}>
-          <div className={styles.footerSocialGroup}>
-            <span>Parth</span>
-            <a
-              href="https://github.com/sinhaparth5"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Parth's GitHub profile"
-            >
-              <Image src="/cv/icons/github.png" alt="" width={16} height={16} />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/parth-sinha18/"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Parth's LinkedIn profile"
-            >
-              <Image
-                src="/cv/icons/linkedin.png"
-                alt=""
-                width={16}
-                height={16}
-              />
-            </a>
-            <a
-              href="https://x.com/sinhaparth555"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Parth's X profile"
-            >
-              <Image src="/cv/icons/x.svg" alt="" width={16} height={16} />
-            </a>
-          </div>
           <div className={styles.footerSocialGroup}>
             <span>Shine</span>
             <a
@@ -658,6 +606,38 @@ export default function Home() {
               target="_blank"
               rel="noreferrer"
               aria-label="Shine's X profile"
+            >
+              <Image src="/cv/icons/x.svg" alt="" width={16} height={16} />
+            </a>
+          </div>
+          <div className={styles.footerSocialGroup}>
+            <span>Parth</span>
+            <a
+              href="https://github.com/sinhaparth5"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Parth's GitHub profile"
+            >
+              <Image src="/cv/icons/github.png" alt="" width={16} height={16} />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/parth-sinha18/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Parth's LinkedIn profile"
+            >
+              <Image
+                src="/cv/icons/linkedin.png"
+                alt=""
+                width={16}
+                height={16}
+              />
+            </a>
+            <a
+              href="https://x.com/sinhaparth555"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Parth's X profile"
             >
               <Image src="/cv/icons/x.svg" alt="" width={16} height={16} />
             </a>

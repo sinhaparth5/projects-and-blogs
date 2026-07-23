@@ -85,3 +85,38 @@
     justify-content: flex-end;
   }
 }
+
+.manageButton {
+  position: fixed;
+  z-index: 90;
+  bottom: 1rem;
+  left: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-ink-muted);
+  background: var(--color-canvas);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+  cursor: pointer;
+  transition-property: color, background-color, scale;
+  transition-duration: var(--motion-fast);
+  transition-timing-function: ease-out;
+}
+
+.manageButton:hover {
+  color: var(--color-ink);
+  background: var(--color-surface-muted);
+}
+
+.manageButton:active {
+  scale: 0.94;
+}
+
+.manageButton:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
