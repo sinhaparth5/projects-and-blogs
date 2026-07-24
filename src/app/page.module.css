@@ -254,7 +254,7 @@
 
 .hero {
   position: relative;
-  min-height: clamp(58.5rem, calc(82vw + 10.5rem), 78.5rem);
+  min-height: clamp(51.7rem, calc(59.25vw + 23.5rem), 76.9rem);
   width: min(100%, 90rem);
   margin-inline: auto;
   isolation: isolate;
@@ -343,10 +343,10 @@
 
 .heroImageWrap {
   position: absolute;
-  top: clamp(34.5rem, calc(32vw + 10.5rem), 43.5rem);
+  top: clamp(31.5rem, calc(21vw + 21.5rem), 40.5rem);
   left: 50%;
   z-index: 2;
-  width: clamp(20rem, 62vw, 56rem);
+  width: clamp(22rem, 68vw, 64rem);
   transform: translateX(-50%);
   will-change: transform;
 }
@@ -360,7 +360,8 @@
 }
 
 .artwork.heroImage img {
-  object-fit: contain;
+  object-fit: cover;
+  transform: scale(1.08);
 }
 
 .imageSpace {
@@ -1149,11 +1150,11 @@
   }
 
   .hero {
-    min-height: 70rem;
+    min-height: clamp(61.5rem, calc(51.75vw + 52.5rem), 78.5rem);
   }
 
   .heroImageWrap {
-    top: 45rem;
+    top: 50.5rem;
     width: 92vw;
   }
 
