@@ -254,7 +254,7 @@
 
 .hero {
   position: relative;
-  min-height: clamp(48rem, 82vw, 68rem);
+  min-height: clamp(58.5rem, calc(82vw + 10.5rem), 78.5rem);
   width: min(100%, 90rem);
   margin-inline: auto;
   isolation: isolate;
@@ -343,7 +343,7 @@
 
 .heroImageWrap {
   position: absolute;
-  top: clamp(24rem, 32vw, 33rem);
+  top: clamp(34.5rem, calc(32vw + 10.5rem), 43.5rem);
   left: 50%;
   z-index: 2;
   width: clamp(20rem, 62vw, 56rem);
@@ -612,7 +612,7 @@
   position: absolute;
   top: 15%;
   right: 4%;
-  width: min(53%, 43rem);
+  width: min(40%, 32rem);
 }
 
 .story h2 {
@@ -1149,11 +1149,11 @@
   }
 
   .hero {
-    min-height: 54rem;
+    min-height: 70rem;
   }
 
   .heroImageWrap {
-    top: 29rem;
+    top: 45rem;
     width: 92vw;
   }
 

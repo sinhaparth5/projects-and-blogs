@@ -199,7 +199,7 @@ export default function Home() {
               Read the notes
             </Link>
           </div>
-          <div className={styles.heroStats} aria-label="Quick facts">
+          <div className={styles.heroStats}>
             <div className={styles.heroStat}>
               <strong>15+</strong>
               <span>years engineering</span>
@@ -417,9 +417,7 @@ export default function Home() {
             />
             <span>01 · Résumé</span>
             <strong>Shine Gupta</strong>
-            <em className={styles.cardRole}>
-              AI engineer, 9+ hackathon wins
-            </em>
+            <em className={styles.cardRole}>AI engineer, 9+ hackathon wins</em>
           </Link>
           <Link className={styles.cardLink} href="/parth/" prefetch={false}>
             <Artwork
@@ -548,8 +546,8 @@ export default function Home() {
               CyberRakshak <ArrowUpRight aria-hidden="true" size={16} />
             </h3>
             <p>
-              An AI cybercrime prediction system with 82% accuracy and
-              real-time risk scoring. Winner, Innotech 2023.
+              An AI cybercrime prediction system with 82% accuracy and real-time
+              risk scoring. Winner, Innotech 2023.
             </p>
           </a>
         </div>
